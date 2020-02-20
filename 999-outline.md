@@ -9,22 +9,22 @@
 1. What you need
 1. Online resources
 1. Acknowledgements
-1. Chapter 1 - Active Record
+1. Chapter -- - Active Record
    * Caching
    * Scopes
-1. Chapter 2 - Primary keys
+1. Chapter -- - Primary keys
    * Int4 vs Int16 vs Int32 vs Int64
    * UUID
-1. Chapter 3 - Foreign keys
-1. Chapter 4 - Query Interface
+1. Chapter -- - Foreign keys
+1. Chapter -- - Query Interface
    * Dynamic queries
-1. Chapter 5 - Migrations
-1. Chapter 6 - Explain
-1. Chapter 7 - Arel
-1. Chapter 8 - Raw SQL
-1. Chapter 9 - Batch Processing
-1. Chapter 10 - Aggregate Functions
-1. Chapter 11 - SQL Indexes
+1. Chapter -- - Migrations
+1. Chapter -- - Explain
+1. Chapter -- - Arel
+1. Chapter -- - Raw SQL
+1. Chapter -- - Batch Processing
+1. Chapter -- - Aggregate Functions
+1. Chapter -- - SQL Indexes
    * Unique
    * Not Unique
    * Composite
@@ -32,7 +32,7 @@
    * Foreign Keys
    * Deciding when they're needed
    * Deciding when they're no longer needed
-1. Chapter 12 - SQL Functions
-1. Chapter 13 - SQL Stored Procedures
-1. Chapter 14 - SQL Regex
-1. Chapter 15 - SQL Profiling
+1. Chapter -- - SQL Functions
+1. Chapter -- - SQL Stored Procedures
+1. Chapter -- - SQL Regex
+1. Chapter -- - SQL Profiling
