@@ -30,14 +30,15 @@
 1. Chapter 5 - Query Interface
    * Dynamic queries
 1. Chapter 6 - Migrations
-1. Chapter 7 - Explain
+1. Chapter 7 - Query Plans
 1. Chapter -- - Arel
 1. Chapter -- - Raw SQL
 1. Chapter -- - Batch Processing
    * find_in_batches
    * in_batches
 1. Chapter -- - Aggregate Functions
-1. Chapter -- - SQL Indexes
+1. Chapter -- - Indexes
+   * (are a storage tradeoff - indexes take up disk space to produce faster queries)
    * Unique
    * Not Unique
    * Composite
