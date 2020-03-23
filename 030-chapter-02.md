@@ -32,7 +32,6 @@ Some of the terminology differs across database platforms, depending on which do
 * Index - 
 * Scan - 
 
-
 ## ACID
 
 ACID is a set of properties that help guarantee the validity of data committed to a database. We'll define each of the components of ACID below. PostgreSQL and MySQL (when using the InnoDB and NDB Cluster Storage engines) are both ACID compliant.
@@ -44,4 +43,4 @@ ACID is a set of properties that help guarantee the validity of data committed t
 
 ## Resources
 
-* https://www.postgresql.org/docs/9.5/using-explain.html
+* 
