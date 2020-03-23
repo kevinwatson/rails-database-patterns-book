@@ -30,7 +30,9 @@
 1. Chapter 5 - Query Interface
    * Dynamic queries
 1. Chapter 6 - Migrations
-1. Chapter 7 - Query Plans
+1. Chapter 7 - PostgreSQL Query Plans
+1. Chapter 8 - MySQL Query Plans
+1. Chapter 9 - SQLite Query Plans
 1. Chapter -- - Arel
 1. Chapter -- - Raw SQL
 1. Chapter -- - Batch Processing
