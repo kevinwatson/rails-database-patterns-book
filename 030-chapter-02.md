@@ -31,6 +31,8 @@ Some of the terminology differs across database platforms, depending on which do
 * Join - 
 * Index - 
 * Scan - 
+* View - 
+* Materialized View - 
 
 ## ACID
 
