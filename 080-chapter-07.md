@@ -8,32 +8,33 @@ We'll review the query plans from both MySQL and PostgreSQL. We'll dig into the 
 
 ## Definitions
 
-* B-tree Index:
+* B-tree Index: A self-balancing tree data structure. The default and most common type of index in PostgreSQL.
 * Bitmap: A temporary data structure that is populated in memory while running a query
-* Bitmap Heap Scan:
-* Bitmap Index: An index that is encoded using bitmaps (e.g. 1s and 0s) for fast data comparison
-* Bitmap Index Scan:
-* BitmapAnd: 
+* Bitmap Heap Scan: A 'bitmap index scan' was used to find all of the matching records, the index results are sorted using an in-memory 'bitmap' data structure, and then the records are retrieved from the table. More efficient than an 'Index Scan' for retrieving larger sets of data.
+* Bitmap Index: An index that is encoded using bitmaps (e.g. 1s and 0s) for fast data comparison.
+* Bitmap Index Scan: An index was used and the results are parsed and store in an in-memory bitmap structure.
+* BitmapAnd: The intersection of the results from two bitmap index scans are returned.
+* BitmapOr: Similar to BitmapAnd, the union of the results from two bitmap index scans are returned.
 * Block: Also known as a page, a block is an 8KB chunk of disk space where the permanent data is stored. Before the data can be read or modified it is loaded into a bitmap.
-* Buffers: 
-* Exact: The opposite of lossy, when the bitmap is within the constraints of the `work_mem` setting
-* Explain: A breakdown of how the query will be executed, based on metrics and statistics that may not be up to date
-* Explain Analyze: Runs the query and displays a breakdown of how the query was executed
-* GiST Index:
-* GIN Index:
-* Hash Index:
-* Heap: 
-* Heap Blocks: 
+* Buffers: Identify which parts of the query are the most input/output intensive.
+* Exact: The opposite of lossy, when the bitmap is within the constraints of the `work_mem` setting.
+* Explain: A breakdown of how the query will be executed, based on metrics and statistics that may not be up to date.
+* Explain Analyze: Runs the query and displays a breakdown of how the query was executed.
+* GiST Index (Generalized Search Tree): A class of index types that support B-trees, R-trees and other indexing schemes. Supports custom data types.
+* GIN Index (Generalized Inverted Index): A type of index that supports composite values, such as documents. Implemented as a set of key-value pairs.
+* Hash Index: A type of index that is designed for simple equality comparisons. Creating Hash indexes is generally discouraged because of several limitations.
+* Heap: The structure used to store the table data on disk.
+* Heap Blocks: Eight kilobyte (8KB) blocks of disk space where the table data is stored.
+* High-cardinality data: Data that is mostly unique.
 * Index: A small copy of the data in the table, usually containing only one or two fields that can be used to find the data more quickly than scanning the original table
 * Index Only Scan: The results are returned from the index, the table is not scanned
-* Index Scan: The results are returned from both the index and the table
-* High-cardinality data: Data that is mostly unique
+* Index Scan: The index is scanned, and as each item in the index is found, the matching table record is added to the output (if data is needed from the table). Most efficient for retrieving small sets of data.
 * Lossy: When a bitmap becomes too large (larger than the available `work_mem`), the processor? is no longer tracking the individual tuples, but starts storing the bitmap that will be used later to rescan for the specific tuples.
-* Parallel Seq Scan (parallel sequential scan): Two workers work on the filter condition at the same time
+* Parallel Seq Scan (parallel sequential scan): Two workers work on the filter condition at the same time.
 * Page: Also known as a block, a page is an 8KB chunk of disk space where the permanent data is stored. Before the data can be read or modified it is loaded into a bitmap.
 * Recheck Cond (recheck condition): When the bitmap is larger than the `work_mem` setting, it is converted to a 'lossy' style. When this happens, only the pages are tracked instead of the individual tuples. The table-visiting phase has to examine each tuple on the page and recheck the scan condition to see which tuples to return
-* Seq Scan (sequential scan): Each row in a table is inspected in the order the records are stored in the table
-* SP-GiST Index:
+* Seq Scan (sequential scan): Each row in a table is inspected in the order the records are stored in the table. Most efficient for retrieving most of the records in a table.
+* SP-GiST Index (Space-Partitioned GiST Index): Supports partitioned search trees which map in-memory nodes to disk pages so that a search is optimized and only needs access to a few disk pages.
 
 ## Optimization
 
@@ -151,20 +152,22 @@ WHERE account_id = 1;
 
 This time the output is drastically different.
 
-Line 1 Shows that a `Bitma Heap scan` was performed on the table. Bitmap heap scans . This line also shows us that we have a cost of `1355.69`. This value is much smaller than the original `4503.25` we got when we ran the query without the index on the `account_id` field. We also learn from this line that 506 rows were found that match our filter.
+Line 1 Shows that a `Bitma Heap scan` was performed on the table. This line also shows us that we have a cost of `1355.69`. This value is much smaller than the original `4503.25` we got when we ran the query without the index on the `account_id` field. We also learn from this line that 506 rows were found that match our filter.
 
 Line 2 Shows that a recheck condition occurred - the bitmap that was built during processing grew larger than the current settings allow, so pages were returned instead of individual tuples. The processor will need to `recheck` the final pages to find the individual tuples from those pages. Also included on this line is the filter that was used for the `recheck` - `account_id = 1`
 
-Line 3 Shows that the processor? visited 465 blocks. Exact means that it was not lossy (the individual tuples were tracked).
+Line 3 Shows that the planner visited 465 blocks. Exact means that it was not lossy (the individual tuples were tracked).
 
-Line 4 Shows 
+Line 4 Shows that a bitmap index scan used index `posts_account_id_idx` and returned 506 rows.
 
-Line 5 Shows 
+Line 5 Shows the filter condition that was used in the index: `account_id = 1`
 
-Line 6 Shows 
+Line 6 Shows how much time was spent by the query planner deciding what would be the quickest path to executing the query - `7.757 milliseconds`
 
-Line 7 Shows 
+Line 7 Shows how much time was spent running the query and generating the output - `1.861 milliseconds`. In this case the planner took more time that it did to actually run the query.
 
 ## Resources
 
 * https://www.postgresql.org/docs/9.5/using-explain.html
+* https://www.postgresql.org/message-id/12553.1135634231@sss.pgh.pa.us
+* https://www.postgresql.org/docs/9.2/spgist-intro.html
