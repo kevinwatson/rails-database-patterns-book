@@ -58,6 +58,7 @@
 1. Chapter -- - Database Client
 1. Chapter -- - Profiling
 1. Chapter -- - Locking
+1. Chapter -- - Sharding
 1. Chapter -- - Seeing is Believing
    * Set up a test database
    * Seeding
