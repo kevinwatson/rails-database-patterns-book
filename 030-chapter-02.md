@@ -8,31 +8,36 @@ In this book, we'll discuss a few relational database platforms that are popular
 
 Some of the terminology differs across database platforms, depending on which documention you read or who you ask. Most of the time, though they're using different terminology to describe the same things. Here are a few terms that we'll use throughout the book.
 
+* Blocking - 
 * Columns - Also known as fields
-* Database - A collection of objects, such as tables, where records are stored
-* Fields - Distinct attributes that describe an individual record
-* Function - Logic that can run against one or more columns inside of a transaction
-* Procedure - Logic that can include 
-* Records - An individual entity that represents a collection of fields
-* Table - A collection of individual records
-* Transaction - An independent unit of work that may involved multiple operations, such as inserting into one table and deleting from another table
-* Tuple - Also known as records
-* Commit - Successfully closing out a transaction
-* Rollback - When a failure occurs during a transaction, the current and prior statements are switched back to their state before the transaction started
 * Concurrency - Simultaneous access to view or manipulate data
+* Commit - Successfully closing out a transaction
+* Connection pool - A cache of connections that are reusable
+* Create, Read, Update, Delete (CRUD) - 
 * Data Definition Language (DDL) - Statements that can create, modify or drop database structures
 * Data Manipulation Language (DML) - Statements that can create, modify or remove rows from a table
-* Create, Read, Update, Delete (CRUD) - 
-* Keys - 
-* Lock - 
-* Block - 
-* Query - 
-* Replication - 
-* Join - 
-* Index - 
-* Scan - 
-* View - 
+* Database - A collection of objects, such as tables, where records are stored
+* Deadlock - A situation where two or more database connections are waiting for a lock on a resource (row, table, etc) to be released
+* Fields - Distinct attributes that describe an individual record
+* Function - Logic that can run against one or more columns inside of a transaction
+* Index - A data structure that provides quick access to data
+* Join - Used to combine the results of one or more relations
+* Keys - Uniquely identifies rows in a table
+* Lock - Concurrent database systems provide locking mechanisms which allow rows or tables to be locked for exclusive access
 * Materialized View - 
+* Procedure - Logic that can include 
+* Query - A method of retrieving data from a database relation, such as a table or view
+* Record - An individual entity or row that represents a collection of fields
+* Relation - An object in a relational database management system which presents data, such as a table or view
+* Relational Database Management System (RDBMS) - A collection of relational objects (views, tables, etc) which store data and can be queried and manipulated
+* Replication - 
+* Rollback - When a failure occurs during a transaction, the current and prior statements are switched back to their state before the transaction started
+* Scan - 
+* Structured Query Language (SQL) - A computer language used to retrieve and manipulate data in a database
+* Table - A collection of rows and columns
+* Transaction - An independent unit of work that may involved multiple operations, such as inserting into one table and deleting from another table
+* Tuple - Also known as a record
+* View - A pre-defined query of data from one or more tables that can itself be queried as if it were a table
 
 ## ACID
 
@@ -45,4 +50,4 @@ ACID is a set of properties that help guarantee the validity of data committed t
 
 ## Resources
 
-* 
+* https://en.wikipedia.org/wiki/Relational_database
