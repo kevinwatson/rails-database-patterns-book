@@ -6,7 +6,12 @@
   * Terminology
   * ACID
   * Resources
-* Chapter 3 - Keys
+* [Chapter 3 - Keys](040-chapter-03.md)
+  * Introduction
+  * Primary Keys
+  * Foreign Keys
+  * Data Types
+  * Resources
 * Chapter 4 - Active Record
 * Chapter 5 - Query Interface
 * Chapter 6 - Migrations
