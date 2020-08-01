@@ -72,4 +72,6 @@
 1. Chapter -- - Optimized queries
    * Inner joins vs left joins
    * Common Table Expressions (CTE)
+1. Bulk inserts
+1. Antipatterns
 
