@@ -44,10 +44,3 @@ Not all models need to be Active Record models that map to a database. We can ad
 
 * https://guides.rubyonrails.org/active_model_basics.html
 * https://guides.rubyonrails.org/active_record_basics.html
-
-## Wrap-up
-
-There are a variety of Ruby gems available that can help you build your application's model layer. If you follow some type of Model architectural pattern, you can create models that are backed by a RESTful resource, a database table, or something else. In the next chapter, we're going to discuss a new model type: Active Remote. Active Remote allows you to share data between applications efficiently.
-
-In the next chapter, we'll discuss Active Remote, an alternative to Active Record which provides a model for our application, whose data is retrieved from another service. It allows us to continue to utilize the Rails MVC pattern, but retrieve and manage data owned by another service.
-

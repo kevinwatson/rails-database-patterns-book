@@ -15,7 +15,6 @@
 * [Chapter 4 - Active Record and Active Model](050-chapter-04.md)
   * Introduction
   * Resources
-  * Wrap-up
 * Chapter 5 - Query Interface
 * Chapter 6 - Migrations
 * [Chapter 7 - PostgreSQL Query Plans](080-chapter-07.md)
