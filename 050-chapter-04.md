@@ -38,7 +38,7 @@ The most common way to persist and retrieve data in a Rails application is with 
 
 Active Model is used by Active Record for data validation, serialization and a number of other features. 
 
-Not all models need to be Active Record models that map to a database. We can add models to our app where some models are backed by a database, while another model could map to an API endpoint. This leads us to Active Remote - models that map to a remote service over a message bus. We'll discuss this in detail in the next chapter.
+Not all models need to be Active Record models that map to a database. We can add models to our app where some models are backed by a database, while another model could map to an API endpoint.
 
 ## Resources
 
