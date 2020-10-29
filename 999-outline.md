@@ -74,4 +74,4 @@
    * Common Table Expressions (CTE)
 1. Bulk inserts
 1. Antipatterns
-
+1. Document Databases
