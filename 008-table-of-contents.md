@@ -26,3 +26,7 @@
   * Resources
 * Chapter 8 - MySQL Query Plans
 * Chapter 9 - SQLite Query Plans
+* [Chapter 10 - Arel](110-chapter-10.md)
+  * Introduction
+  * The Arel API
+  * Resources
