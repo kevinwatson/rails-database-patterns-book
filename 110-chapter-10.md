@@ -62,7 +62,7 @@ usr = User.arel_table
 | | lteq | usr[:created_at].lteq(Date.today) | "`users`.`created_at` <= '2020-11-05'" |
 | | lteq_any | usr[:created_at].lteq_any(Date.yesterday..Date.today) | "(`users`.`created_at` <= '2020-11-04' OR `users`.`created_at` <= '2020-11-05')" |
 | | lteq_all | usr[:created_at].lteq_all(Date.yesterday..Date.today) | "(`users`.`created_at` <= '2020-11-04' AND `users`.`created_at` <= '2020-11-05')" |
-| | when | Arel::Nodes::Case.new(usr[:email]).when('a@b.com').then('a@b.org').when('b@b.com').then('b@b.org') | "CASE `users`.`email` WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END" |
+| | when | Arel::Nodes::Case.new(usr[:email])<br>  .when('a@b.com')<br>  .then('a@b.org')<br>  .when('b@b.com')<br>  .then('b@b.org') | "CASE `users`.`email` WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END" |
 | | concat | 
 | | contains
 | | overlaps
