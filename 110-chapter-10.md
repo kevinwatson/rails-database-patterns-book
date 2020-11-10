@@ -87,7 +87,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Order Ascending | asc
 | Order Descending | desc
 | Limit | limit
-| Taken | taken (alias for as limit)
+| Taken | taken (alias for limit)
 | | constraints
 | | offset
 | | skip
