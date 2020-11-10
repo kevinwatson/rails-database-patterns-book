@@ -2,18 +2,25 @@
 
 ## Introduction
 
-ActiveRecord uses a library called Arel to define relationship behaviors between models and build queries to interact with the database. Arel is a relational algebra library with an API which is provided by Rails.
+ActiveRecord uses a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel is a relational algebra library which provides a domain specific language (DSL) to help developers write database agnostic code.
 
 ## The Arel API
 
-The full list of public Arel methods with examples. Let's imagine we have a User model with a corresponding users table in the database. We'll compose Arel queries to retrieve data from this table.
+Let's imagine we have a User model with a corresponding users table in the database. We'll compose simple Arel queries that can be used to construct larger queries to retrieve data from this table.
 
-sql
-CREATE TABLE users (email varchar(1000), created_at datetime)
+The table we'll use in our example will consist of the following structure:
 
+```sql
+CREATE TABLE users (email varchar(1000), created_at datetime, login_count int)
+```
 
+To gain access to the instance of the predefined Arel table, we can get a reference via the model's `arel_table` method. We'll use the following `usr` variable to generate some of our queries.
 
+```ruby
 usr = User.arel_table
+```
+
+The (nearly) full list of public Arel methods with examples are included in the table below.
 
 | Description | Arel method | Arel example | SQL | Links|
 |---|---|---|---|---|
@@ -23,7 +30,7 @@ usr = User.arel_table
 | Equal | eq | usr[:email].eq('t@g.com') | users.email = 't@g.com' |
 | Is not Distinct From | is_not_distinct_from | usr[:email].is_not_distinct_from('t@g.com') | users.email <=> 't@g.com' | [PostgreSQL](https://wiki.postgresql.org/wiki/Is_distinct_from) |
 | Is Distinct From | is_distinct_from | usr[:email].is_distinct_from('t@g.com') | NOT users.email <=> 't@g.com' | [PostgreSQL](https://wiki.postgresql.org/wiki/Is_distinct_from) |
-| | eq_any | usr[:email].eq_any(['a@b.com', 'b@b.com']) | (users.email = 'a@b.com' OR users.email = 'b@b.com') |
+| Equals Any | eq_any | usr[:email].eq_any(['a@b.com', 'b@b.com']) | (users.email = 'a@b.com' OR users.email = 'b@b.com') |
 | Equals All | eq_all | usr[:email].eq_all(['a@b.com', 'b@b.com']) | (users.email = 'a@b.com' AND users.email = 'b@b.com') |
 | Between | between | usr[:created_at].between(Date.today..Date.tomorrow) | users.created_at BETWEEN '2020-11-04' AND '2020-11-05' |
 | In | in | usr[:email].in(['a@b.com', 'b@b.com']) | users.email IN ('a@b.com', 'b@b.com') |
