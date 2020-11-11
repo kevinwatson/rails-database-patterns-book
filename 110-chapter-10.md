@@ -2,7 +2,9 @@
 
 ## Introduction
 
-ActiveRecord uses a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel is a relational algebra library which provides a domain specific language (DSL) to help developers write database agnostic code.
+ActiveRecord implements a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel provides a domain specific language (DSL) to help developers write database agnostic code.
+
+This allows Rails developers to write Ruby code to query and modify the database without knowing the specific implementation details of each SQL database (SQLite, MySQL, PostgreSQL, etc). Because of Arel, we can also write small, reusable code fragments that can be reused in our code base. As a simple example, `User.arel_table[:created_at].between(Date.today..Date.tomorrow)` could be wrapped in a method in the `User` model and reused in a scope, or wherever it is needed. This makes even more sense when we are able to combine small fragments into larger, more complicated statements which are still easy for developers to read.
 
 ## The Arel API
 
@@ -27,7 +29,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Not equal | not_eq | usr[:email].not_eq('t@g.com') | users.email != 't@g.com' |
 | Not equal to any | not_eq_any | usr[:email].not_eq_any(['t@g.com','a@b.com']) | (users.email != 't@g.com' OR users.email != 'a@b.com') |
 | Not equal to all | not_eq_all | usr[:email].not_eq_all(['t@g.com','a@b.com']) | (users.email != 't@g.com' AND users.email != 'a@b.com') |
-| Equal | eq | usr[:email].eq('t@g.com') | users.email = 't@g.com' |
+| Equals | eq | usr[:email].eq('t@g.com') | users.email = 't@g.com' |
 | Is not Distinct From | is_not_distinct_from | usr[:email].is_not_distinct_from('t@g.com') | users.email <=> 't@g.com' | [PostgreSQL](https://wiki.postgresql.org/wiki/Is_distinct_from) |
 | Is Distinct From | is_distinct_from | usr[:email].is_distinct_from('t@g.com') | NOT users.email <=> 't@g.com' | [PostgreSQL](https://wiki.postgresql.org/wiki/Is_distinct_from) |
 | Equals Any | eq_any | usr[:email].eq_any(['a@b.com', 'b@b.com']) | (users.email = 'a@b.com' OR users.email = 'b@b.com') |
@@ -40,12 +42,12 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Not In | not_in | usr[:created_at].not_in(Date.today..Date.tomorrow) | (users.created_at < '2020-11-04' OR users.created_at > '2020-11-05') |
 | Not In Any | not_in_any | usr[:created_at].not_in_any(Date.today..Date.tomorrow) | (users.created_at NOT IN ('2020-11-04') OR users.created_at NOT IN ('2020-11-05')) |
 | Not In All | not_in_all | usr[:created_at].not_in_all(Date.today..Date.tomorrow) | (users.created_at NOT IN ('2020-11-04') AND users.created_at NOT IN ('2020-11-05')) |
-| Match Wildcard | matches | usr[:email].matches('%a.com') | users.email LIKE '%a.com' |
-| Match Regexp | matches_regexp | usr[:email].matches_regexp(/a.com$/) | TODO: NotImplementedError (~ not implemented for this db) |
-| Match Any Wildcard | matches_any | usr[:email].matches_any(['%a.com','%b.com']) | (users.email LIKE '%a.com' OR users.email LIKE '%b.com') |
-| Match All | matches_all | usr[:email].matches_all(['%a.com','%b.com']) | (users.email LIKE '%a.com' AND users.email LIKE '%b.com') |
+| Matches Wildcard | matches | usr[:email].matches('%a.com') | users.email LIKE '%a.com' |
+| Matches Regexp | matches_regexp | usr[:email].matches_regexp(/a.com$/) | |
+| Matches Any Wildcard | matches_any | usr[:email].matches_any(['%a.com','%b.com']) | (users.email LIKE '%a.com' OR users.email LIKE '%b.com') |
+| Matches All | matches_all | usr[:email].matches_all(['%a.com','%b.com']) | (users.email LIKE '%a.com' AND users.email LIKE '%b.com') |
 | Does Not Match Wildcard (Not Like) | does_not_match | usr[:email].does_not_match('%a.com') | users.email NOT LIKE '%a.com' |
-| Does Not Match Regexp | does_not_match_regexp | usr[:email].does_not_match_regexp(/a.com$/) | TODO: NotImplementedError (!~ not implemented for this db) |
+| Does Not Match Regexp | does_not_match_regexp | usr[:email].does_not_match_regexp(/a.com$/) | |
 | Does Not Match Any | does_not_match_any | usr[:email].does_not_match_any(['%a.com','%b.com']) | (users.email NOT LIKE '%a.com' OR users.email NOT LIKE '%b.com') |
 | Does Not Match All | does_not_match_all | usr[:email].does_not_match_all(['%a.com','%b.com']) | (users.email NOT LIKE '%a.com' AND users.email NOT LIKE '%b.com') |
 | Greater Than or Equal To | gteq | usr[:created_at].gteq(Date.yesterday) | users.created_at >= '2020-11-03' |
