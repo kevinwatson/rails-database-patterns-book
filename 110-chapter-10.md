@@ -13,7 +13,7 @@ Let's imagine we have a User model with a corresponding users table in the datab
 The table we'll use in our example will consist of the following structure:
 
 ```sql
-CREATE TABLE users (email varchar(1000), created_at datetime, login_count int)
+CREATE TABLE users (email varchar(1000), created_at datetime, login_count integer)
 ```
 
 To gain access to the instance of the predefined Arel table, we can get a reference via the model's `arel_table` method. We'll use the following `usr` variable to generate some of our queries.
@@ -67,11 +67,11 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | contains
 | | overlaps
 | | quoted_array
-| | count
-| | sum
-| | maximum
-| | minimum
-| | average
+| | count | User.count | SELECT COUNT(*) FROM users |
+| | sum | User.sum(:login_count) | SELECT SUM(users.login_count) FROM users |
+| | maximum | User.maximum(:created_at) | SELECT MAX(users.created_at) FROM users |
+| | minimum | User.minimum(:created_at) | SELECT MIN(users.created_at) FROM users |
+| | average | User.average(:login_count) | SELECT AVG(users.login_count) FROM users |
 | | extract(field)
 | Math Multiplication | *
 | Math Addition | +
@@ -111,7 +111,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | order
 | | orders
 | | where_sql
-| | where
+| | where | User.where(:email => 'a@a.com') | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
 | | union
 | | intersect
 | | except
