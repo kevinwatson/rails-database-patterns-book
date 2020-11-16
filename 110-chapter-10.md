@@ -63,9 +63,9 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Less Than or Equal To Any | lteq_any | usr[:created_at].lteq_any(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' OR users.created_at <= '2020-11-05') |
 | Less Than or Equal To All | lteq_all | usr[:created_at].lteq_all(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' AND users.created_at <= '2020-11-05') |
 | Case When Then | when | Arel::Nodes::Case.new(usr[:email])<br>.when('a@b.com')<br>.then('a@b.org')<br>.when('b@b.com')<br>.then('b@b.org') | CASE users.email WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END |
-| Concatenation | concat | 
-| | contains
-| | overlaps
+| Concatenation | concat | Internal use only |
+| | contains | Internal use only |
+| | overlaps | Internal use only |
 | | quoted_array
 | | count | User.count | SELECT COUNT(*) FROM users |
 | | sum | User.sum(:login_count) | SELECT SUM(users.login_count) FROM users |
@@ -73,10 +73,10 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | minimum | User.minimum(:created_at) | SELECT MIN(users.created_at) FROM users |
 | | average | User.average(:login_count) | SELECT AVG(users.login_count) FROM users |
 | | extract(field)
-| Math Multiplication | *
-| Math Addition | +
-| Math Subtraction | -
-| Math Division | /
+| Multiplication | *
+| Addition | +
+| Subtraction | -
+| Division | /
 | Bitwise AND | &
 | Bitwise OR | \|
 | Bitwise XOR | ^
@@ -122,12 +122,16 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | source
 | | comment
 | | over
+| Convert a SQL string to a `Arel::Nodes::SqlLiteral` object to work around the warning `DEPRECATION WARNING: Dangerous query method (method whose arguments are used as raw SQL) called with non-attribute argument(s)` | sql | User.order(Arel.sql('length(email)')) | SELECT users.* FROM users ORDER BY length(email) |
+| All fields | star | User.select(Arel.star.count) | SELECT COUNT(*) FROM users |
+| Descending order | reverse_order | User.all.reverse_order | SELECT users.* FROM users ORDER BY users.id |
 
 ## References
 
 * https://devhints.io/arel
 * https://github.com/DavyJonesLocker/postgres_ext/blob/master/docs/querying.md
 * https://github.com/rails/rails/tree/master/activerecord/lib/arel
+* http://www.scuttle.io
 * https://thoughtbot.com/blog/using-arel-to-compose-sql-queries
 * https://www.rubydoc.info/gems/arel/7.1.1/Arel/Nodes/Concat
 
