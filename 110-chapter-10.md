@@ -73,10 +73,10 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | minimum | User.minimum(:created_at) | SELECT MIN(users.created_at) FROM users |
 | | average | User.average(:login_count) | SELECT AVG(users.login_count) FROM users |
 | | extract(field)
-| Multiplication | *
-| Addition | +
-| Subtraction | -
-| Division | /
+| Multiplication | * | Arel::Nodes::Multiplication.new(100, Arel::Nodes::SqlLiteral.new('0.9')) | 100 * 0.9 |
+| Addition | + | Arel::Nodes::Addition.new(100, 100) | 100 + 100 |
+| Subtraction | - | Arel::Nodes::Subtraction.new(100, 100) | 100 - 100 |
+| Division | / | Arel::Nodes::Division.new(100, 10) | 100 / 10 |
 | Bitwise AND | &
 | Bitwise OR | \|
 | Bitwise XOR | ^
