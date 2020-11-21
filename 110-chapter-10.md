@@ -83,7 +83,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Bitwise Shift Left | <<
 | Bitwise Shift Right | >>
 | Bitwise NOT | ~@
-| Alias | as
+| Alias | as | Arel::Nodes::Addition.new(usr[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count |
 | | lower
 | | coalesce
 | Order Ascending | asc
