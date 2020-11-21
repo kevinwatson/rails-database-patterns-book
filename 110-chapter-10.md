@@ -74,9 +74,9 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | average | User.average(:login_count) | SELECT AVG(users.login_count) FROM users |
 | | extract(field)
 | Multiplication | * | Arel::Nodes::Multiplication.new(100, Arel::Nodes::SqlLiteral.new('0.9')) | 100 * 0.9 |
-| Addition | + | Arel::Nodes::Addition.new(100, 100) | 100 + 100 |
-| Subtraction | - | Arel::Nodes::Subtraction.new(100, 100) | 100 - 100 |
-| Division | / | Arel::Nodes::Division.new(100, 10) | 100 / 10 |
+| Addition | + | Arel::Nodes::Addition.new(usr[:login_count], 100) | users.login_count + 100 |
+| Subtraction | - | Arel::Nodes::Subtraction.new(usr[:login_count], 100) | users.login_count - 100 |
+| Division | / | Arel::Nodes::Division.new(usr[:login_count], 10) | users.login_count / 10 |
 | Bitwise AND | &
 | Bitwise OR | \|
 | Bitwise XOR | ^
