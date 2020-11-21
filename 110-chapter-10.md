@@ -77,12 +77,12 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Addition | + | Arel::Nodes::Addition.new(usr[:login_count], 100) | users.login_count + 100 |
 | Subtraction | - | Arel::Nodes::Subtraction.new(usr[:login_count], 100) | users.login_count - 100 |
 | Division | / | Arel::Nodes::Division.new(usr[:login_count], 10) | users.login_count / 10 |
-| Bitwise AND | &
-| Bitwise OR | \|
-| Bitwise XOR | ^
-| Bitwise Shift Left | <<
-| Bitwise Shift Right | >>
-| Bitwise NOT | ~@
+| Bitwise AND | & | Arel::Nodes::BitwiseAnd.new(56, 53) | 56 & 53 |
+| Bitwise OR | \| | Arel::Nodes::BitwiseOr.new(56, 53) | 56 \| 53 |
+| Bitwise XOR | ^ | Arel::Nodes::BitwiseXor.new(56, 53) | 56 ^ 53 |
+| Bitwise Shift Left | << | Arel::Nodes::BitwiseShiftLeft.new(56, 2) | 56 << 2 |
+| Bitwise Shift Right | >> | Arel::Nodes::BitwiseShiftRight.new(56, 2) | 56 >> 2 |
+| Bitwise NOT | ~@ | Arel::Nodes::BitwiseNot.new(56) | ~ 56 |
 | Alias | as | Arel::Nodes::Addition.new(usr[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count |
 | | lower
 | | coalesce
