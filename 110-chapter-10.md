@@ -73,14 +73,12 @@ A list of public Arel methods with examples are included in the table below. Not
 | Less Than or Equal To Any | lteq_any | users[:created_at].lteq_any(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' OR users.created_at <= '2020-11-05') |
 | Less Than or Equal To All | lteq_all | users[:created_at].lteq_all(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' AND users.created_at <= '2020-11-05') |
 | Case Statements | when | Arel::Nodes::Case.new(users[:email])<br>.when('a@b.com')<br>.then('a@b.org')<br>.when('b@b.com')<br>.then('b@b.org') | CASE users.email WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END |
-| Concatenation | concat | Internal use only |
-| | quoted_array
-| | count | User.count | SELECT COUNT(*) FROM users |
-| | sum | User.sum(:login_count) | SELECT SUM(users.login_count) FROM users |
-| | maximum | User.maximum(:created_at) | SELECT MAX(users.created_at) FROM users |
-| | minimum | User.minimum(:created_at) | SELECT MIN(users.created_at) FROM users |
-| | average | User.average(:login_count) | SELECT AVG(users.login_count) FROM users |
-| | extract(field)
+| Count | count | Arel.star.count | COUNT(*) |
+| Sum | sum | users[:login_count].sum | SUM(users.login_count) |
+| Maximum | maximum | users[:login_count].maximum | MAX(users.created_at) |
+| Minimum | minimum | users[:login_count].minimum | MIN(users.created_at) |
+| Average | average | users.[:login_count].average | AVG(users.login_count) |
+| Extract | extract | users[:created_at].extract(:month) | EXTRACT(MONTH FROM users.created_at) |
 | Multiplication | * | Arel::Nodes::Multiplication.new(users[:login_count], Arel::Nodes::SqlLiteral.new('0.9')) | users.login_count * 0.9 |
 | Addition | + | Arel::Nodes::Addition.new(users[:login_count], 100) | users.login_count + 100 |
 | Subtraction | - | Arel::Nodes::Subtraction.new(users[:login_count], 100) | users.login_count - 100 |
@@ -94,18 +92,10 @@ A list of public Arel methods with examples are included in the table below. Not
 | Alias | as | Arel::Nodes::Addition.new(users[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count
 | Order Ascending | asc | users.order(users[:email].asc).project(Arel.star) | SELECT * FROM users ORDER BY users.email ASC |
 | Order Descending | desc | users.order(users[:email].desc).project(Arel.star) | SELECT users.* FROM users ORDER BY users.email DESC |
-| Limit | limit
-| Taken | taken (alias for limit)
+| Taken (alias for limit) | taken
 | | constraints
-| | offset
-| | skip
-| | exists
-| | lock
-| | on
-| | group
-| | from
-| | froms
-| Inner Join | join | users.join(posts).project(Arel.star) | SELECT * FROM users INNER JOIN posts |
+| Skip/offset | skip | users.skip(5) | SELECT FROM users OFFSET 5 |
+| Inner Join | join | users.join(posts).on(posts[:user_id].eq(users[:id])).project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
 | Left Outer Join | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
 | | having
 | | window
@@ -122,7 +112,7 @@ A list of public Arel methods with examples are included in the table below. Not
 | | except
 | | lateral
 | | with
-| | take
+| Limit | take | users.take(5) | SELECT FROM `users` LIMIT 5 |
 | | join_sources
 | | source
 | | comment
