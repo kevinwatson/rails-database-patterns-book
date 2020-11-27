@@ -4,7 +4,13 @@
 
 ActiveRecord implements a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel provides a domain specific language (DSL) to help developers write database agnostic code.
 
-This allows Rails developers to write Ruby code to query and modify the database without knowing the specific implementation details of each SQL database (SQLite, MySQL, PostgreSQL, etc). Because of Arel, we can also write small, reusable code fragments that can be reused in our code base. As a simple example, `User.arel_table[:created_at].between(Date.today..Date.tomorrow)` could be wrapped in a method in the `User` model and reused in a scope, or wherever it is needed. This makes even more sense when we are able to combine small fragments into larger, more complicated statements which are still easy for developers to read.
+This API allows Rails developers to write Ruby code to query and modify the database without knowing the specific implementation details of each SQL database (SQLite, MySQL, PostgreSQL, etc). Because of Arel, we can write small code fragments that can be reused in our code base. As an example, `User.arel_table[:created_at].between(Date.today..Date.tomorrow)` could be wrapped in a method in the `User` model and reused in a scope or wherever it is needed. This helps us DRY up our code when we can combine small fragments into larger, more complicated statements which are still easy for developers to read.
+
+Most of the time, Rails developers will build their queries and CRUD statements using the ActiveRecord::Relation API. This API provides the standard `where`, `joins`, `or` and other related methods for a model. Under the hood, ActiveRecord is using the Arel API to track and build the associations, filters and related data to eventually build the SQL statements that are needed to interact with the database.
+
+The ActiveRecord API is written with a general use case in mind, and does not provide all of the functionality that may be needed at times. For example, a developer may need to find records that were created after a specific date. The ActiveRecord API doesn't provide a 'greater than' clause. The developer is left to either use a combination of the ActiveRecord API and a string, or by using a combination of the ActiveRecord and Arel APIs. An implementation using ActiveRecord and a string could be `User.where("created_at >= ?", Date.today.midnight)` while an ActiveRecord and Arel implementation might look like `User.where(User.arel_table[:created_at].gt(Date.today.midnight))`. While the ActiveRecord/Arel combination might be more verbose, it is database agnostic and the Arel code could be extracted out into it's own reusable method.
+
+As a rule of thumb, developers should use the methods provided by the ActiveRecord::Relation API to generate their queries, and when a developer needs to generate a specific database query that the ActiveRecord API doesn't support, the developer should then methods provided by the Arel API.
 
 ## The Arel API
 
@@ -130,6 +136,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 ## References
 
 * https://devhints.io/arel
+* https://ernie.io/2010/05/11/activerecord-relation-vs-arel
 * https://github.com/DavyJonesLocker/postgres_ext/blob/master/docs/querying.md
 * https://github.com/rails/rails/tree/master/activerecord/lib/arel
 * http://www.scuttle.io
