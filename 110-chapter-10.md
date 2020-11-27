@@ -70,10 +70,8 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Less Than or Equal To | lteq | users[:created_at].lteq(Date.today) | users.created_at <= '2020-11-05' |
 | Less Than or Equal To Any | lteq_any | users[:created_at].lteq_any(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' OR users.created_at <= '2020-11-05') |
 | Less Than or Equal To All | lteq_all | users[:created_at].lteq_all(Date.yesterday..Date.today) | (users.created_at <= '2020-11-04' AND users.created_at <= '2020-11-05') |
-| Case When Then | when | Arel::Nodes::Case.new(users[:email])<br>.when('a@b.com')<br>.then('a@b.org')<br>.when('b@b.com')<br>.then('b@b.org') | CASE users.email WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END |
+| Case Statements | when | Arel::Nodes::Case.new(users[:email])<br>.when('a@b.com')<br>.then('a@b.org')<br>.when('b@b.com')<br>.then('b@b.org') | CASE users.email WHEN 'a@b.com' THEN 'a@b.org' WHEN 'b@b.com' THEN 'b@b.org' END |
 | Concatenation | concat | Internal use only |
-| | contains | Internal use only |
-| | overlaps | Internal use only |
 | | quoted_array
 | | count | User.count | SELECT COUNT(*) FROM users |
 | | sum | User.sum(:login_count) | SELECT SUM(users.login_count) FROM users |
@@ -91,9 +89,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | Bitwise Shift Left | << | Arel::Nodes::BitwiseShiftLeft.new(56, 2) | 56 << 2 |
 | Bitwise Shift Right | >> | Arel::Nodes::BitwiseShiftRight.new(56, 2) | 56 >> 2 |
 | Bitwise NOT | ~@ | Arel::Nodes::BitwiseNot.new(56) | ~ 56 |
-| Alias | as | Arel::Nodes::Addition.new(users[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count |
-| | lower
-| | coalesce
+| Alias | as | Arel::Nodes::Addition.new(users[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count
 | Order Ascending | asc | users.order(users[:email].asc).project(Arel.star) | SELECT * FROM users ORDER BY users.email ASC |
 | Order Descending | desc | users.order(users[:email].desc).project(Arel.star) | SELECT users.* FROM users ORDER BY users.email DESC |
 | Limit | limit
@@ -108,7 +104,7 @@ The (nearly) full list of public Arel methods with examples are included in the 
 | | from
 | | froms
 | Inner Join | join | users.join(posts).project(Arel.star) | SELECT * FROM users INNER JOIN posts |
-| | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
+| Left Outer Join | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
 | | having
 | | window
 | Project (the select clause) | project | users.project(:email) | SELECT email FROM users |
