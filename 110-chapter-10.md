@@ -121,6 +121,8 @@ A list of public Arel methods with examples are included in the table below. Not
 | Select all fields | star | users.project(Arel.star.count) | SELECT COUNT(*) FROM users |
 | Descending order | reverse_order | User.all.reverse_order | SELECT users.* FROM users ORDER BY users.id |
 
+## Examples
+
 ## References
 
 * https://devhints.io/arel
