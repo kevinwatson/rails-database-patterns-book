@@ -12,6 +12,8 @@ The ActiveRecord API is written with a general use case in mind, and does not pr
 
 As a rule of thumb, developers should use the methods provided by the ActiveRecord::Relation API to generate their queries, and when a developer needs to generate a specific database query that the ActiveRecord API doesn't support, the developer should then methods provided by the Arel API.
 
+The methods provided by the Arel API are, by themselves, are used to generate SQL fragments that when combined with other Arel method calls and the ActiveRecord API are used to construct a complete query.
+
 ## The Arel API
 
 Let's imagine we have a User model with a corresponding users table in the database. We'll compose simple Arel queries that can be used to construct larger queries to retrieve data from this table.
@@ -30,7 +32,7 @@ users = User.arel_table
 posts = Post.arel_table
 ```
 
-The (nearly) full list of public Arel methods with examples are included in the table below.
+A list of public Arel methods with examples are included in the table below. Not all examples are complete queries, but are building blocks that can be used to generate complete queries.
 
 | Description | Arel method | Arel example | SQL | Links|
 |---|---|---|---|---|
