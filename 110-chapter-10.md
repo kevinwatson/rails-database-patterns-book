@@ -21,7 +21,7 @@ Let's imagine we have a User model with a corresponding users table in the datab
 The tables we'll use in our example will have of the following structure:
 
 ```sql
-CREATE TABLE users (id integer, email varchar, created_at datetime, login_count integer)
+CREATE TABLE users (id integer, email varchar, created_at datetime, login_count integer, country_code varchar)
 CREATE TABLE posts (id integer, user_id integer, comment varchar)
 ```
 
@@ -90,25 +90,18 @@ A list of public Arel methods with examples are included in the table below. Not
 | Bitwise Shift Right | >> | Arel::Nodes::BitwiseShiftRight.new(56, 2) | 56 >> 2 |
 | Bitwise NOT | ~@ | Arel::Nodes::BitwiseNot.new(56) | ~ 56 |
 | Alias | as | Arel::Nodes::Addition.new(users[:login_count], 10).as('inflated_login_count') | users.login_count + 10 AS inflated_login_count
-| Order Ascending | asc | users.order(users[:email].asc).project(Arel.star) | SELECT * FROM users ORDER BY users.email ASC |
-| Order Descending | desc | users.order(users[:email].desc).project(Arel.star) | SELECT users.* FROM users ORDER BY users.email DESC |
-| Taken (alias for limit) | taken
-| | constraints
+| Order Ascending | asc | users[:email].asc | users.email ASC |
+| Order Descending | desc | users[:email].desc | users.email DESC |
 | Skip/offset | skip | users.skip(5) | SELECT FROM users OFFSET 5 |
 | Inner Join | join | users.join(posts).on(posts[:user_id].eq(users[:id])).project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
 | Left Outer Join | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
-| | having
-| | window
-| Project (the select clause) | project | users.project(:email) | SELECT email FROM users |
-| | optimizer_hints
-| | distinct
-| | distinct_on
+| Having | having | users.group(users[:country_code]).having(Arel.star.count.gteq(100)).project(users[:country_code], Arel.star.count) | SELECT users.country_code, COUNT(*) FROM users GROUP BY users.country_code HAVING COUNT(*) >= 100 |
+| Window | window | Arel::Nodes::Window.new.order(users[:email]) | (ORDER BY users.email) |
+| Project (provides access to the select manager) | project | users.project(:email) | SELECT email FROM users |
+| Distinct | distinct | users.project(users[:country_code]).distinct | SELECT DISTINCT users.country_code FROM users |
+| Distinct On | distinct_on | posts.project(Arel.star).distinct_on(posts[:user_id]) | SELECT DISTINCT ON posts.user_id FROM posts |
 | | order | users.order(users[:email].asc).project(Arel.star) |SELECT * FROM users ORDER BY users.email ASC |
-| | orders
-| | where_sql
-| | where | User.where(:email => 'a@a.com') | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
-| | union
-| | intersect
+| | where | users.where(users[:email].eq('a@a.com')).project(Arel.star) | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
 | | except
 | | lateral
 | | with
@@ -116,10 +109,9 @@ A list of public Arel methods with examples are included in the table below. Not
 | | join_sources
 | | source
 | | comment
-| | over
-| Convert a SQL string to a `Arel::Nodes::SqlLiteral` object | sql | users.order(Arel.sql('length(email)')).project(:email) | SELECT email FROM users ORDER BY length(email) |
-| Select all fields | star | users.project(Arel.star.count) | SELECT COUNT(*) FROM users |
-| Descending order | reverse_order | User.all.reverse_order | SELECT users.* FROM users ORDER BY users.id |
+| Over and partition by | over | users[:login_count].average.over(Arel::Nodes::Window.new.partition(users[:country_code])).as('average_logins_by_country') | AVG(users.login_count) OVER (PARTITION BY users.email) AS average_logins |
+| Convert a SQL string to an `Arel::Nodes::SqlLiteral` object | sql | users.order(Arel.sql('length(email)')).project(:email) | SELECT email FROM users ORDER BY length(email) |
+| Select all fields | star | users.project(Arel.star) | SELECT * FROM users |
 
 ## Examples
 
