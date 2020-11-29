@@ -2,7 +2,7 @@
 
 ## Introduction
 
-ActiveRecord implements a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel provides a domain specific language (DSL) to help developers write database agnostic code.
+ActiveRecord includes a library named Arel to define relationship behaviors between models and build queries to interact with the database. Arel provides a domain specific language (DSL) to help developers write database agnostic code.
 
 This API allows Rails developers to write Ruby code to query and modify the database without knowing the specific implementation details of each SQL database (SQLite, MySQL, PostgreSQL, etc). Because of Arel, we can write small code fragments that can be reused in our code base. As an example, `User.arel_table[:created_at].between(Date.today..Date.tomorrow)` could be wrapped in a method in the `User` model and reused in a scope or wherever it is needed. This helps us DRY up our code when we can combine small fragments into larger, more complicated statements which are still easy for developers to read.
 
