@@ -15,18 +15,19 @@
 * [Chapter 4 - Active Record and Active Model](050-chapter-04.md)
   * Introduction
   * Resources
-* Chapter 5 - Query Interface
-* Chapter 6 - Migrations
-* [Chapter 7 - PostgreSQL Query Plans](080-chapter-07.md)
+* [Chapter 5 - Arel](060-chapter-05.md)
+  * Introduction
+  * The Arel API
+  * Examples
+  * Resources
+* Chapter 6 - Query Interface
+* Chapter 7 - Migrations
+* [Chapter 8 - PostgreSQL Query Plans](080-chapter-08.md)
   * Introduction
   * Definitions
   * Optimization
   * Setup
   * Execution
   * Resources
-* Chapter 8 - MySQL Query Plans
-* Chapter 9 - SQLite Query Plans
-* [Chapter 10 - Arel](110-chapter-10.md)
-  * Introduction
-  * The Arel API
-  * Resources
+* Chapter 9 - MySQL Query Plans
+* Chapter 10 - SQLite Query Plans

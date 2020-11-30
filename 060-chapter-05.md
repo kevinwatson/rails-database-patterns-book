@@ -115,7 +115,7 @@ A list of public Arel methods with examples are included in the table below. Not
 
 ## Examples
 
-## References
+## Resources
 
 * https://devhints.io/arel
 * https://ernie.io/2010/05/11/activerecord-relation-vs-arel
