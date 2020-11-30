@@ -93,9 +93,9 @@ A list of public Arel methods with examples are included in the table below. Not
 | Order Ascending | asc | users[:email].asc | users.email ASC |
 | Order Descending | desc | users[:email].desc | users.email DESC |
 | Skip/offset | skip | users.skip(5) | SELECT FROM users OFFSET 5 |
-| Inner Join | join | users.join(posts).on(posts[:user_id].eq(users[:id])).project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
-| Left Outer Join | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
-| Having | having | users.group(users[:country_code])<br>.having(Arel.star.count.gteq(100))<br>.project(users[:country_code], Arel.star.count) | SELECT users.country_code, COUNT(*) FROM users GROUP BY users.country_code HAVING COUNT(*) >= 100 |
+| Inner Join | join | users<br>.join(posts)<br>.on(posts[:user_id].eq(users[:id]))<br>.project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
+| Left Outer Join | outer_join | users<br>.outer_join(posts)<br>.on(users[:id].eq(posts[:user_id]))<br>.project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
+| Having | having | users<br>.group(users[:country_code])<br>.having(Arel.star.count.gteq(100))<br>.project(users[:country_code], Arel.star.count) | SELECT users.country_code, COUNT(*) FROM users GROUP BY users.country_code HAVING COUNT(*) >= 100 |
 | Window | window | Arel::Nodes::Window.new.order(users[:email]) | (ORDER BY users.email) |
 | Project (provides access to the select manager) | project | users.project(:email) | SELECT email FROM users |
 | Distinct | distinct | users.project(users[:country_code]).distinct | SELECT DISTINCT users.country_code FROM users |
