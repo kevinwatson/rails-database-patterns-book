@@ -95,7 +95,7 @@ A list of public Arel methods with examples are included in the table below. Not
 | Skip/offset | skip | users.skip(5) | SELECT FROM users OFFSET 5 |
 | Inner Join | join | users.join(posts).on(posts[:user_id].eq(users[:id])).project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
 | Left Outer Join | outer_join | users.outer_join(posts).on(users[:id].eq(posts[:user_id])).project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
-| Having | having | users.group(users[:country_code]).having(Arel.star.count.gteq(100)).project(users[:country_code], Arel.star.count) | SELECT users.country_code, COUNT(*) FROM users GROUP BY users.country_code HAVING COUNT(*) >= 100 |
+| Having | having | users.group(users[:country_code])<br>.having(Arel.star.count.gteq(100))<br>.project(users[:country_code], Arel.star.count) | SELECT users.country_code, COUNT(*) FROM users GROUP BY users.country_code HAVING COUNT(*) >= 100 |
 | Window | window | Arel::Nodes::Window.new.order(users[:email]) | (ORDER BY users.email) |
 | Project (provides access to the select manager) | project | users.project(:email) | SELECT email FROM users |
 | Distinct | distinct | users.project(users[:country_code]).distinct | SELECT DISTINCT users.country_code FROM users |
@@ -109,7 +109,7 @@ A list of public Arel methods with examples are included in the table below. Not
 | | join_sources
 | | source
 | | comment
-| Over and partition by | over | users[:login_count].average.over(Arel::Nodes::Window.new.partition(users[:country_code])).as('average_logins_by_country') | AVG(users.login_count) OVER (PARTITION BY users.email) AS average_logins |
+| Over and partition by | over | users[:login_count]<br>.average<br>.over(Arel::Nodes::Window.new.partition(users[:country_code]))<br>.as('average_logins_by_country') | AVG(users.login_count) OVER (PARTITION BY users.email) AS average_logins |
 | Convert a SQL string to an `Arel::Nodes::SqlLiteral` object | sql | users.order(Arel.sql('length(email)')).project(:email) | SELECT email FROM users ORDER BY length(email) |
 | Select all fields | star | users.project(Arel.star) | SELECT * FROM users |
 
