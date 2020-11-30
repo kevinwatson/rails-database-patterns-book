@@ -1,4 +1,4 @@
-### Chapter 10 - Arel
+### Chapter 5 - Arel
 
 ## Introduction
 
