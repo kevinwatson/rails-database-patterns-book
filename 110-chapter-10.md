@@ -100,8 +100,8 @@ A list of public Arel methods with examples are included in the table below. Not
 | Project (provides access to the select manager) | project | users.project(:email) | SELECT email FROM users |
 | Distinct | distinct | users.project(users[:country_code]).distinct | SELECT DISTINCT users.country_code FROM users |
 | Distinct On | distinct_on | posts.project(Arel.star).distinct_on(posts[:user_id]) | SELECT DISTINCT ON posts.user_id FROM posts |
-| | order | users.order(users[:email].asc).project(Arel.star) |SELECT * FROM users ORDER BY users.email ASC |
-| | where | users.where(users[:email].eq('a@a.com')).project(Arel.star) | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
+| Order | order | users.order(users[:email].asc).project(Arel.star) |SELECT * FROM users ORDER BY users.email ASC |
+| Where | where | users.where(users[:email].eq('a@a.com')).project(Arel.star) | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
 | | except
 | | lateral
 | | with
