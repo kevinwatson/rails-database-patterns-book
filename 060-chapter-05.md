@@ -203,3 +203,5 @@ A list of public Arel methods with examples are included in the table below. Not
 * https://tanzu.vmware.com/content/blog/using-arel-to-build-complex-sql-expressions
 * https://thoughtbot.com/blog/using-arel-to-compose-sql-queries
 * https://www.rubydoc.info/gems/arel/7.1.1/Arel/Nodes/Concat
+
+## Wrap-up
