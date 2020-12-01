@@ -205,3 +205,5 @@ A list of public Arel methods with examples are included in the table below. Not
 * https://www.rubydoc.info/gems/arel/7.1.1/Arel/Nodes/Concat
 
 ## Wrap-up
+
+As we've seen, Arel provides an API which allows us to DRY up our code. It does this by providing Ruby methods that translate directly to the particular SQL flavor that we're using in our Ruby on Rails app.
