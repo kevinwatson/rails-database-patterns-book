@@ -146,7 +146,7 @@ A list of public Arel methods with examples are included in the table below. Not
 
 | Description | Arel method | Arel example | SQL |
 |---|---|---|---|
-| Skip/offset | skip | users.skip(5) | SELECT FROM users OFFSET 5 |
+| Skip/offset | skip | users.skip(5) | users OFFSET 5 |
 
 ### Join
 
@@ -173,7 +173,7 @@ A list of public Arel methods with examples are included in the table below. Not
 | Description | Arel method | Arel example | SQL |
 |---|---|---|---|
 | Where | where | users.where(users[:email].eq('a@a.com')).project(Arel.star) | SELECT users.* FROM users WHERE users.email = 'a@a.com' |
-| Limit | take | users.take(5) | SELECT FROM `users` LIMIT 5 |
+| Limit | take | users.take(5) | users LIMIT 5 |
 | | except
 | | lateral
 | | with
