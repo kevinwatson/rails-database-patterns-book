@@ -23,7 +23,7 @@
   * Wrap-up
 * Chapter 6 - Query Interface
 * Chapter 7 - Migrations
-* [Chapter 8 - PostgreSQL Query Plans](080-chapter-08.md)
+* [Chapter 8 - PostgreSQL Query Plans](090-chapter-08.md)
   * Introduction
   * Definitions
   * Optimization
