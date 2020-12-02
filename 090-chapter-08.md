@@ -1,4 +1,4 @@
-### Chapter 7 - PostgreSQL Query Plans
+### Chapter 8 - PostgreSQL Query Plans
 
 ## Introduction
 
