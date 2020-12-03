@@ -22,7 +22,14 @@
   * Resources
   * Wrap-up
 * Chapter 6 - Query Interface
-* Chapter 7 - Migrations
+* [Chapter 7 - Migrations](080-chapter-07.md)
+  * Introduction
+  * Creating a Migration
+  * Running a Migration
+  * Patterns
+  * Examples
+  * Resources
+  * Wrap-up
 * [Chapter 8 - PostgreSQL Query Plans](090-chapter-08.md)
   * Introduction
   * Definitions
