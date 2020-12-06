@@ -37,5 +37,11 @@
   * Setup
   * Execution
   * Resources
-* Chapter 9 - MySQL Query Plans
+* [Chapter 9 - MySQL Query Plans](100-chapter-09.md)
+  * Introduction
+  * Definitions
+  * Optimization
+  * Setup
+  * Execution
+  * Resources
 * Chapter 10 - SQLite Query Plans
