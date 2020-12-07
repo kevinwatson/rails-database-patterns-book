@@ -177,7 +177,7 @@ This time the output is much different.
 * possible_keys: `idx_posts_account_id` is the index that is available but may not necessarily be used by the query optimizer
 * key: `idx_posts_account_id` is the actual index that was used
 * key_len: `4` tells us that the 4 bytes were used by the index because the indexed column `account_id` is an `int` type
-* ref: `const`
+* ref: `const` indicates that a constant was used. In this case the integer `1` (a constant value) was used to match on values in the index.
 * rows: `15` rows were examined in the index to produce this output
 * filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `idx_posts_account_id` index
 
