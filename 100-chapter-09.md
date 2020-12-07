@@ -9,16 +9,16 @@ We'll review the query plans for MySQL. We'll dig into the nuances of the MySQL 
 ## Definitions
 
 * Explain Output
-  * Select Type: The type of selection used by the optimizer to run the query. Output could include `simple`, `primary` and `subquery`.
+  * Select Type: The type of selection used by the optimizer to run the query. Output could include `simple`, `primary`, `subquery`, `derived`, `dependent subquery`, `uncacheable subquery`, `union`, `dependent union` and `union result`.
   * Table: The table that this line in the output refers to
   * Partitions: The matching partitions
-  * Type: The join type
+  * Type: The join type. This field indicates how tables were joined, and will give clues on action that can be taken on how to optimize the query. The data in this field is one of the most important pieces of information that can help us optimize our queries and apply appropriate indexes.
   * Possible Keys: The indexes that are available to choose from
   * Key: The index that was actually chosen
   * Ken Len: The length of the chosen index or key
-  * Ref: 
+  * Ref: The columns or constants that are used in the key column
   * Rows: Estimated number of rows that will be examined
-  * Filtered: The percentage of rows that are filtered by table definition
+  * Filtered: The percentage of rows that are filtered by table definition. Low values indicate that the query may not be running optimally.
   * Extra: Additional information about the query execution plan
 
 ## Optimization
@@ -132,16 +132,26 @@ WHERE account_id = 1;
 
 `EXPLAIN` output
 
-```console
-
+| id | select_type | table | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | SIMPLE | posts | NULL | ALL | NULL | NULL | NULL | NULL | 9788 | 10.00 | Using where |
 ```
 
 Let's inspect the output.
 
+Because there is only one table in the query, we get a single line in the `EXPLAIN` output. As we make our queries more complex, we can expect one row per table in the order that they're accessed via the query optimizer. The `NULL` fields will be omitted from our analysis.
+
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `posts` table was accessed in this query
+* type: `All` indicates that a table scan was performed to find the requested records
+* rows: `9788` rows were examined to produce this output
+* filtered: `10.00`% of the rows were filtered out to produce the result
+* Extra: `Using where` indicates that the `where` statement was used to filter the rows. When the `type` value is `ALL` and `Using where` is in this column, the query is performing optimally.
+
 ### With an Index
 
 ```sql
-CREATE INDEX ON posts (account_id);
+CREATE INDEX idx_posts_account_id ON posts (account_id);
 ```
 
 Now let's run the same query with `EXPLAIN` to get the new query plan.
@@ -155,11 +165,21 @@ WHERE account_id = 1;
 
 `EXPLAIN` output
 
-```console
-
-```
+| id | select_type | table | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | SIMPLE | posts | NULL | ref | idx_posts_account_id | idx_posts_account_id | 4 | const | 15 | 100.00 | NULL |
 
 This time the output is much different.
+
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `posts` table was accessed in this query
+* type: `ref` indicates that all rows retrieved were read from the index
+* possible_keys: `idx_posts_account_id` is the index that is available but may not necessarily be used by the query optimizer
+* key: `idx_posts_account_id` is the actual index that was used
+* key_len: `4` tells us that the 4 bytes were used by the index because the indexed column `account_id` is an `int` type
+* ref: `const`
+* rows: `15` rows were examined in the index to produce this output
+* filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `idx_posts_account_id` index
 
 ### Inner Joins
 
@@ -224,4 +244,7 @@ ORDER BY accounts.id, posts.id;
 
 * https://dev.mysql.com/doc/refman/8.0/en/explain-extended.html
 * https://dev.mysql.com/doc/refman/8.0/en/explain-output.html
+* https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html
+* https://www.sitepoint.com/using-explain-to-write-better-mysql-queries
 * https://stackoverflow.com/q/25098747
+* https://dba.stackexchange.com/a/164360
