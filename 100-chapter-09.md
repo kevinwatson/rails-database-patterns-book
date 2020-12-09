@@ -45,7 +45,7 @@ CREATE TABLE accounts (
 
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  account_id INTEGER NOT NULL REFERENCES accounts (id),
+  account_id BIGINT NOT NULL REFERENCES accounts (id),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   comment TEXT NOT NULL
 );
@@ -176,7 +176,7 @@ This time the output is much different.
 * type: `ref` indicates that all rows retrieved were read from the index
 * possible_keys: `idx_posts_account_id` is the index that is available but may not necessarily be used by the query optimizer
 * key: `idx_posts_account_id` is the actual index that was used
-* key_len: `4` tells us that the 4 bytes were used by the index because the indexed column `account_id` is an `int` type
+* key_len: `4` tells us that 4 bytes were used by the index because the indexed column `account_id` is an `int` type
 * ref: `const` indicates that a constant was used. In this case the integer `1` (a constant value) was used to match on values in the index.
 * rows: `15` rows were examined in the index to produce this output
 * filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `idx_posts_account_id` index
@@ -195,22 +195,36 @@ WHERE posts.account_id = 1;
 
 `EXPLAIN ANALYZE` output
 
-```console
+| id | select_type | table | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | SIMPLE | accounts | NULL | const | PRIMARY,id | PRIMARY | 8 | const | 1 | 100.00 | NULL |
+| 1 | SIMPLE | posts | NULL | ref | idx_posts_account_id | idx_posts_account_id | 8 | const | 15 | 100.00 | NULL |
 
-```
+We see that because we joined on another table, there are two rows in the output. We'll examine each row.
 
-```sql
-EXPLAIN
-SELECT *
-FROM posts
-INNER JOIN accounts ON accounts.id = posts.account_id;
-```
+Row 1
 
-`EXPLAIN` output
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `accounts` table was accessed in this query
+* type: `const` indicates that rows were filtered using equality on a constant value, in this case the value of `1` (which is matched from the join on the `posts` table)
+* possible_keys: `PRIMARY,id` tells us that an index named `PRIMARY` exists on the primary key field and is a possible candidate
+* key: `PRIMARY` is the actual index that was used. The `PRIMARY` index is a unique index that is automatically generated on all MySQL tables.
+* key_len: `8` tells us that 8 bytes were used by the index because the indexed column `account_id` is a `bigint` type
+* ref: `const` indicates that a constant was used. In this case the integer `1` (a constant value) was used to match on values in the index.
+* rows: `1` row was examined in the index to produce this output
+* filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `PRIMARY` index
 
-```console
+Row 2
 
-```
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `posts` table was accessed in this query
+* type: `ref` indicates that all rows retrieved were read from the index
+* possible_keys: `idx_posts_account_id` tells us that an index named `idx_posts_account_id` exists on the primary key field and is a possible candidate for the query optimizer
+* key: `idx_posts_account_id` is the actual index that was used to filter records
+* rows: `15` rows were examined in the index to produce this output
+* filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `idx_posts_account_id` index
+
+Next, we'll see how adding a sort to the join changes the query plan.
 
 ```sql
 EXPLAIN
@@ -222,9 +236,34 @@ ORDER BY accounts.id;
 
 `EXPLAIN` output
 
-```console
+| id | select_type | table | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | SIMPLE | posts | NULL | ALL | idx_posts_account_id | NULL | NULL | NULL | 9853 | 100.00 | Using temporary; Using filesort |
+| 1 | SIMPLE | accounts | NULL | eq_ref | PRIMARY,id | PRIMARY | 8 | query_plans.posts.account_id | 1 | 100.00 | Using where |
 
-```
+Row 1
+
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `posts` table was accessed in this query
+* type: `All` indicates that a table scan was performed to find the requested records
+* possible_keys: `idx_posts_account_id` tells us that an index named `idx_posts_account_id` exists on the primary key field and is a possible candidate
+* key: `NULL` tells us that no keys were used to retrieve rows from this table because no filter was defined in a `where` clause
+* rows: `9853` rows were examined in the table scan to produce this output
+* filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the table scan
+* Extra: `Using temporary; Using filesort` tells us that because such a large number of records needed to be sorted, a temporary table was used to perform the sort
+
+Row 2
+
+* select_type: `SIMPLE` indicates that the query accessed a table directly without any unions or subqueries
+* table: The `accounts` table was accessed in this query
+* type: `eq_ref` indicates that all rows retrieved were read from the index
+* possible_keys: `PRIMARY,id` tells us that an index named `idx_posts_account_id` exists on the primary key field and is a possible candidate for the query optimizer
+* key: `PRIMARY` is the actual index that was used to filter records
+* key_len: `8` tells us that 8 bytes were used by the index because the indexed column `account_id` is a `bigint` type
+* ref: `query_plans.posts.account_id` indicates that the `posts.account_id` field was used in the join
+* rows: `1` row was examined in the index to produce this output
+* filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `PRIMARY` index
+* Extra: `Using where` tells us that a join was used to filter rows on the `accounts` table to generate our output
 
 ```sql
 EXPLAIN
