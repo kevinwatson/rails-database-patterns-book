@@ -21,7 +21,7 @@ Let's imagine we have a User model with a corresponding users table in the datab
 The tables we'll use in our example will have of the following structure:
 
 ```sql
-CREATE TABLE users (id integer, email varchar, created_at datetime, login_count integer, country_code varchar)
+CREATE TABLE users (id integer, email varchar, created_at datetime, login_count integer, country_code varchar, referred_by_user_id integer)
 CREATE TABLE posts (id integer, user_id integer, comment varchar)
 ```
 
@@ -29,6 +29,7 @@ To gain access to the instance of the predefined Arel table, we can get a refere
 
 ```ruby
 users = User.arel_table
+users_alias = User.arel_table.alias(:users_alias)
 posts = Post.arel_table
 ```
 
@@ -154,6 +155,8 @@ A list of public Arel methods with examples are included in the table below. Not
 |---|---|---|---|
 | Inner Join | join | users<br>.join(posts)<br>.on(posts[:user_id].eq(users[:id]))<br>.project(Arel.star) | SELECT * FROM users INNER JOIN posts ON posts.user_id = users.id |
 | Left Outer Join | outer_join | users<br>.outer_join(posts)<br>.on(users[:id].eq(posts[:user_id]))<br>.project(Arel.star) | SELECT * FROM users LEFT OUTER JOIN posts ON users.id = posts.user_id |
+| Define a join condition | create_on | users_alias<br>.create_on(users_alias[:id]<br>.eq(users[:referred_by_user_id])) | ON users_alias.id = users.referred_by_user_id |
+| Define a join | create_join | users.create_join(users_alias,<br> users_alias.create_on(users_alias[:id]<br>.eq(users[:referred_by_user_id]))) | INNER JOIN users users_alias ON users_alias.id = users.referred_by_user_id |
 
 ### Extraction
 
@@ -192,6 +195,28 @@ A list of public Arel methods with examples are included in the table below. Not
 | Select all fields | star | users.project(Arel.star) | SELECT * FROM users |
 
 ## Examples
+
+### Self Joining a Table
+
+Let's say we have a table with a foreign key that matches back to the primary key on the same table. This is called a self join. Arel provides the `create_on` and `create_join` methods that we can use to define the join conditions between these tables. We'll create an alias for the `users` table that we'll use to give the tables separate names in our query, even though they are actually the same table.
+
+```ruby
+users = User.arel_table
+users_alias = User.arel_table.alias(:users_alias)
+
+self_join_condition = users_alias.create_on(users_alias[:id].eq(users[:referred_by_user_id]))
+users.create_join(users_alias, self_join_condition)
+
+User.joins(users.create_join(users_alias, self_join_condition)).select(users_alias[:email].as('referred_by'), users[:email].as('user'))
+```
+
+The combination of ActiveRecord::Relation code and Arel code above produces the following SQL.
+
+```sql
+SELECT users_alias.email AS referred_by, users.email AS user
+FROM users
+INNER JOIN users users_alias ON users_alias.id = users.referred_by_user_id
+```
 
 ## Resources
 
