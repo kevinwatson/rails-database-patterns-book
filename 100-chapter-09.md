@@ -23,8 +23,6 @@ We'll review the query plans for MySQL. We'll dig into the nuances of the MySQL 
 
 ## Optimization
 
-
-
 ## Setup
 
 In the scripts below, we'll create a test database with a couple of tables. We'll seed those tables with data. We'll then run queries against that data, inspect the query plan, add indexes, and run the queries again. We'll compare the query plans to see how our queries were affected.
@@ -265,20 +263,6 @@ Row 2
 * filtered: `100.00`% indicates that none of the rows needed to be filtered out after using the `PRIMARY` index
 * Extra: `Using where` tells us that a join was used to filter rows on the `accounts` table to generate our output
 
-```sql
-EXPLAIN
-SELECT *
-FROM posts
-INNER JOIN accounts ON accounts.id = posts.account_id
-ORDER BY accounts.id, posts.id;
-```
-
-`EXPLAIN` output
-
-```console
-
-```
-
 ## Resources
 
 * https://dev.mysql.com/doc/refman/8.0/en/explain-extended.html
@@ -287,3 +271,9 @@ ORDER BY accounts.id, posts.id;
 * https://www.sitepoint.com/using-explain-to-write-better-mysql-queries
 * https://stackoverflow.com/q/25098747
 * https://dba.stackexchange.com/a/164360
+
+# Wrap-up
+
+I once worked on a Rails app that was backed by a MySQL database. There was a report that was used to look back at prior months which would join several large tables and aggregate some of the data. It would take nearly 15 minutes to run and needed to be run with different inputs several times a day on the first of the month. The users asked if there was anything we could do to speed it up. I looked at the queries that the report was running, ran an `EXPLAIN` on the query and found that there were several foreign keys that did not have indexes. Once I created a migration and added an index, the query went from taking 15 minutes down to less than a second. It was so much faster that the users suspected that I modified the query and the output was no longer trustworthy. I reassured them that the query and data were the same, all that changed was that the report accessed the data via an index, instead of running a much slower table scan.
+
+MySQL query plans are a great resources to help you optimize your queries as your tables grow. Running a query plan and inspecting the output on the `key`, `ref`, `rows`, `rows` and `Extra` fields can help you determine where to apply indexes which can make queries that take minutes down to milliseconds.

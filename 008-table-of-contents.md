@@ -44,4 +44,5 @@
   * Setup
   * Execution
   * Resources
+  * Wrap-up
 * Chapter 10 - SQLite Query Plans
