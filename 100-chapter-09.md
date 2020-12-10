@@ -23,6 +23,12 @@ We'll review the query plans for MySQL. We'll dig into the nuances of the MySQL 
 
 ## Optimization
 
+In general, when running a query that requests a majority of the rows in a table, the query processor may choose to run a table scan instead of an index scan. This is because it is cheaper to read the table into memory than it is to find the position of the requested rows in an index and then go to the table to get the actual rows. When the table contains more rows than can be loaded into memory, the following can be used as a reference to determine query efficiency. For complex queries, the items on the left are more efficient than the items on the right.
+
+```console
+Index scan > Table scan
+```
+
 ## Setup
 
 In the scripts below, we'll create a test database with a couple of tables. We'll seed those tables with data. We'll then run queries against that data, inspect the query plan, add indexes, and run the queries again. We'll compare the query plans to see how our queries were affected.
