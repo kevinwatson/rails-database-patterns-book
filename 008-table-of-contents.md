@@ -46,3 +46,6 @@
   * Resources
   * Wrap-up
 * Chapter 10 - SQLite Query Plans
+* [Chapter 11 - Batch and Background Processing](120-chapter-11.md)
+  * Introduction
+  * Resources
