@@ -123,6 +123,8 @@ CALL generate_post_data();
 
 ## Execution
 
+MySQL provides an `EXPLAIN` function that can be used to get detailed information about how the query optimizer will run the query against the tables in the database. This can be run either with a SQL database client, e.g. `EXPLAIN SELECT`, or in rails console using the `explain` method, e.g. `User.all.explain`. In the following sections we'll use SQL to keep it simple.
+
 ### Without an Index
 
 Let's run a series of queries and inspect the query plans of each. At this point, MySQL has automatically added unique indexes to our table on the primary key fields. The next query we run will filter on the `account_id` field, which is a foreign key and does not have an index.
