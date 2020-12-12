@@ -48,5 +48,9 @@
 * Chapter 10 - SQLite Query Plans
 * [Chapter 11 - Batch Processing](120-chapter-11.md)
   * Introduction
+  * Update All
+  * ActiveRecord::Batches
+  * Pluck Each
   * Resources
+  * Wrap-up
 * Chapter 12 - Background Processing
