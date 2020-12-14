@@ -53,4 +53,8 @@
   * Pluck Each
   * Resources
   * Wrap-up
-* Chapter 12 - Background Processing
+* [Chapter 12 - Background Processing](130-chapter-12.md)
+  * Introduction
+  * Queues
+  * Resources
+  * Wrap-up
