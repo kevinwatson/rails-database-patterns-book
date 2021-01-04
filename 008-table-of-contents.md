@@ -21,7 +21,11 @@
   * Examples
   * Resources
   * Wrap-up
-* Chapter 6 - Query Interface
+* [Chapter 6 - Active Record Query Interface](070-chapter-06.md)
+  * Introduction
+  * Examples
+  * Resources
+  * Wrap-up
 * [Chapter 7 - Migrations](080-chapter-07.md)
   * Introduction
   * Creating a Migration
