@@ -16,11 +16,11 @@ Defining our models
 
 ```ruby
 class Chair
-	has_many :legs
+  has_many :legs
 end
 
 class Leg
-	belongs_to :chair
+  belongs_to :chair
 end
 ```
 
