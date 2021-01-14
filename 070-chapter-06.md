@@ -24,10 +24,10 @@ class Leg
 end
 ```
 
-With the following schema in the database
+Let's assume the following schema in the database.
 
 ```sql
-CREATE TABLE chairs (id bigserial, type varchar, created_at timestamp, updated_at timestamp);
+CREATE TABLE chairs (id bigserial, kind varchar, created_at timestamp, updated_at timestamp);
 CREATE TABLE legs (id bigserial, chair_id, created_at timestamp, updated_at timestamp);
 ```
 
@@ -44,16 +44,39 @@ The chair variable is a `ActiveRecord::Relation` object, which has various metho
 Next, let's retrieve a limited set of chair objects.
 
 ```ruby
-chairs = Chair.where(type: 'dining')
+chairs = Chair.where(kind: 'dining')
 ```
 
-This will retrieve all chair records where the type is set to `dining`. Again, because of performance efficiencies in the `ActiveRecord::Relation` library, the query is not sent to the database until we start to perform other operations on the `chairs` variable, such as iterate over the items in the object. For example
+This will retrieve all chair records where the `kind` is set to `dining`. Again, because of performance efficiencies in the `ActiveRecord::Relation` library, the query is not sent to the database until we start to perform other operations on the `chairs` variable, such as iterate over the items in the object. For example, the following code will generate the query and make a call to the database when the `each` method is called.
 
 ```ruby
 chairs.each do |chair|
   puts chair.id
 end
 ```
+
+Next, let's modify a database record. We'll use a query to retrieve the chair records where the `kind` field is `NULL` and set it to a default value. We'll provide examples of two ways to do this, the first will iterate over each record and the second will be more efficient.
+
+First, let's retrieve the records and update those records one by one.
+
+```ruby
+chairs = Chair.where(kind: nil)
+
+chairs.each do |chair|
+  chair.kind = 'unknown'
+  chair.save!
+end
+```
+
+In the example above, we used the `save!` bang method. The regular `save` method is also available. The `save` method will return `true` or `false`, depending on whether model validations passed and the record was saved. The bang method, `save!`, will raise an error if either validations failed or there was a problem saving the record. In this example, I used to the bang method to error out and exit the code on the first record that failed. Depending on the application's requirements, this may or may not be the preferred method for handling errors.
+
+Now, let's modify the same records but with a single database call.
+
+```ruby
+Chair.where(kind: nil).update_all(kind: 'unknown')
+```
+
+### Scopes
 
 ## Resources
 
