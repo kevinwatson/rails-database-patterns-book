@@ -31,6 +31,13 @@ CREATE TABLE chairs (id bigserial, kind varchar, created_at timestamp, updated_a
 CREATE TABLE legs (id bigserial, chair_id, created_at timestamp, updated_at timestamp);
 ```
 
+And the Rails scaffolding equivalent
+
+```ruby
+rails g scaffold chair kind:string
+rails g scaffold leg chair:belongs_to
+```
+
 For the purposes of this example, we won't generate the related tables, but based on the classes above, we can assume that the `chairs` table has an `id` field, and the `legs` table has both an `id` and a foreign key `chair_id` field.
 
 Let's start with simple examples and work our way up to more complex examples. The first thing we'll do is use the Query Interface to retrieve all Chair records as Ruby objects.
@@ -69,6 +76,8 @@ end
 ```
 
 In the example above, we used the `save!` bang method. The regular `save` method is also available. The `save` method will return `true` or `false`, depending on whether model validations passed and the record was saved. The bang method, `save!`, will raise an error if either validations failed or there was a problem saving the record. In this example, I used to the bang method to error out and exit the code on the first record that failed. Depending on the application's requirements, this may or may not be the preferred method for handling errors.
+
+Let's dig deeper and find out what's going on behind the scenes.
 
 Now, let's modify the same records but with a single database call.
 
