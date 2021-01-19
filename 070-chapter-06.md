@@ -79,6 +79,43 @@ In the example above, we used the `save!` bang method. The regular `save` method
 
 Let's dig deeper and find out what's going on behind the scenes.
 
+When the first line is run in Rails console, it generates the SQL query and sends the query to the database. If this line was in an app or a script, it would delay the request until the data is needed.
+
+```ruby
+chairs = Chair.where(kind: nil)
+```
+
+In the output, we see it build and run a `SELECT` statement, converting our Ruby `nil` value to a SQL `NULL` value. The object that is returned is a `ActiveRecord::Relation` object which contains a list of Chair objects.
+
+```ruby
+irb(main):012:0> chairs = Chair.where(kind: nil)
+  Chair Load (14.0ms)  SELECT  "chairs".* FROM "chairs" WHERE "chairs"."kind" IS NULL LIMIT ?  [["LIMIT", 11]]
+=> #<ActiveRecord::Relation [#<Chair id: 2, kind: nil, created_at: "2021-01-19 14:44:34", updated_at: "2021-01-19 14:44:34">]>
+```
+
+Now, let's iterate over the collection and update the records one by one.
+
+```ruby
+chairs.each do |chair|
+  chair.kind = 'unknown'
+  chair.save!
+end
+```
+
+```ruby
+irb(main):013:0> chairs.each do |chair|
+irb(main):014:1*   chair.kind = 'unknown'
+irb(main):015:1>   chair.save!
+irb(main):016:1> end
+  Chair Load (7.1ms)  SELECT "chairs".* FROM "chairs" WHERE "chairs"."kind" IS NULL
+   (0.1ms)  begin transaction
+  SQL (18.2ms)  UPDATE "chairs" SET "kind" = ?, "updated_at" = ? WHERE "chairs"."id" = ?  [["kind", "unknown"], ["updated_at", "2021-01-19 14:46:42.295018"], ["id", 2]]
+   (10.2ms)  commit transaction
+=> [#<Chair id: 2, kind: "unknown", created_at: "2021-01-19 14:44:34", updated_at: "2021-01-19 14:46:42">]
+```
+
+Here, we see that because we're going to manipulate data, ActiveRecord uses a database transaction.
+
 Now, let's modify the same records but with a single database call.
 
 ```ruby
