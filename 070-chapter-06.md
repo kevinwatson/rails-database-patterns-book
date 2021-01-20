@@ -107,19 +107,27 @@ irb(main):013:0> chairs.each do |chair|
 irb(main):014:1*   chair.kind = 'unknown'
 irb(main):015:1>   chair.save!
 irb(main):016:1> end
-  Chair Load (7.1ms)  SELECT "chairs".* FROM "chairs" WHERE "chairs"."kind" IS NULL
+  Chair Load (6.2ms)  SELECT "chairs".* FROM "chairs" WHERE "chairs"."kind" IS NULL
    (0.1ms)  begin transaction
-  SQL (18.2ms)  UPDATE "chairs" SET "kind" = ?, "updated_at" = ? WHERE "chairs"."id" = ?  [["kind", "unknown"], ["updated_at", "2021-01-19 14:46:42.295018"], ["id", 2]]
-   (10.2ms)  commit transaction
-=> [#<Chair id: 2, kind: "unknown", created_at: "2021-01-19 14:44:34", updated_at: "2021-01-19 14:46:42">]
+  SQL (17.4ms)  UPDATE "chairs" SET "kind" = ?, "updated_at" = ? WHERE "chairs"."id" = ?  [["kind", "unknown"], ["updated_at", "2021-01-20 14:39:24.823544"], ["id", 3]]
+   (11.3ms)  commit transaction
+   (0.2ms)  begin transaction
+  SQL (16.2ms)  UPDATE "chairs" SET "kind" = ?, "updated_at" = ? WHERE "chairs"."id" = ?  [["kind", "unknown"], ["updated_at", "2021-01-20 14:39:24.859795"], ["id", 4]]
+   (10.1ms)  commit transaction
+   (0.1ms)  begin transaction
+  SQL (15.9ms)  UPDATE "chairs" SET "kind" = ?, "updated_at" = ? WHERE "chairs"."id" = ?  [["kind", "unknown"], ["updated_at", "2021-01-20 14:39:24.893203"], ["id", 5]]
+   (10.7ms)  commit transaction
+=> [#<Chair id: 3, kind: "unknown", created_at: "2021-01-20 14:38:56", updated_at: "2021-01-20 14:39:24">, #<Chair id: 4, kind: "unknown", created_at: "2021-01-20 14:38:57", updated_at: "2021-01-20 14:39:24">, #<Chair id: 5, kind: "unknown", created_at: "2021-01-20 14:39:03", updated_at: "2021-01-20 14:39:24">]
 ```
 
-Here, we see that because we're going to manipulate data, ActiveRecord uses a database transaction.
+In the output above, we see the `SELECT` statement that was lazy loaded. We also see that because we're going to manipulate data, Active Record wraps a database transaction around each `UPDATE` statement.
 
-Now, let's modify the same records but with a single database call.
+The query interface provides methods to perform actions on database records without loading each record into memory. Notice that Active Record does not wrap the `UPDATE` statement in a database transaction.
 
 ```ruby
 Chair.where(kind: nil).update_all(kind: 'unknown')
+  SQL (33.1ms)  UPDATE "chairs" SET "kind" = 'unknown' WHERE "chairs"."kind" IS NULL
+=> 3
 ```
 
 ### Scopes
