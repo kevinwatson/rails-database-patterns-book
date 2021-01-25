@@ -126,9 +126,26 @@ The query interface provides methods to perform actions on database records with
 
 ```ruby
 Chair.where(kind: nil).update_all(kind: 'unknown')
+
   SQL (33.1ms)  UPDATE "chairs" SET "kind" = 'unknown' WHERE "chairs"."kind" IS NULL
 => 3
 ```
+
+If we wanted to run multiple SQL statements wrapped in a transaction, we can use a block.
+
+```ruby
+Chair.transaction do
+  Chair.where(kind: nil).update_all(kind: 'unknown')
+  Chair.where(kind: 'plush').update_all(kind: 'super plush')
+end
+
+(7.6ms)  begin transaction
+  SQL (20.8ms)  UPDATE "chairs" SET "kind" = 'unknown' WHERE "chairs"."kind" IS NULL
+  SQL (24.4ms)  UPDATE "chairs" SET "kind" = 'super plush' WHERE "chairs"."kind" = ?  [["kind", "plush"]]
+(15.9ms)  commit transaction
+```
+
+Both `UPDATE` statements in this `transaction` block are wrapped in a single database transaction. If either of the `UPDATE` statements caused an error, the database would `ROLLBACK` the transaction and Active Record would raise an `ActiveRecord::Rollback` error. When a rollback occurs, the database changes are switched back to their previous state, as if our `UPDATE` statement never occurred.
 
 ### Scopes
 
