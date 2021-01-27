@@ -90,7 +90,7 @@ CREATE TABLE words (word TEXT);
 Now let's populate the tables with some random text. We'll use a file called `words` installed on most Unix-based systems to populate the tables.
 
 ```sql
-\copy words (word) FROM '/usr/share/dict/words';
+COPY words (word) FROM '/usr/share/dict/words';
 
 INSERT INTO accounts (name)
 SELECT
