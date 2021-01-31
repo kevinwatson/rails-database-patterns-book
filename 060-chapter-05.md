@@ -51,6 +51,7 @@ A list of public Arel methods with examples are included in the table below. Not
 | Greater Than | gt | users[:created_at].gt(Date.yesterday) | users.created_at > '2020-11-03' |
 | Greater Than Any | gt_any | users[:created_at].gt_any(Date.yesterday..Date.today) | (users.created_at > '2020-11-03' OR users.created_at > '2020-11-04') |
 | Greater than All | gt_all | users[:created_at].gt_all(Date.yesterday..Date.today) | (users.created_at > '2020-11-03' AND users.created_at > '2020-11-04') |
+| Is NULL | eq | users[:country_count].eq(nil) | users.country_count IS NULL |
 | Less Than | lt | users[:created_at].lt(Date.yesterday) | users.created_at < '2020-11-04' |
 | Less Than Any | lt_any | users[:created_at].lt_any(Date.yesterday..Date.today) | (users.created_at < '2020-11-04' OR users.created_at < '2020-11-05') |
 | Less Than All | lt_all | users[:created_at].lt_all(Date.yesterday..Date.today) | (users.created_at < '2020-11-04' AND users.created_at < '2020-11-05') |
