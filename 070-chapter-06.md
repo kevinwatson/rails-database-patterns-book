@@ -151,7 +151,7 @@ Both `UPDATE` statements in this `transaction` block are wrapped in a single dat
 
 Scopes are pre-defined, reusable Active Record filters that you can define in your models. Like any `ActiveRecord::Relation` object, scopes are chainable. They can be used to hide the implementation details for complex queries.
 
-Let's look at some examples. The first example will retrieve all chair records which do not have any assigned leg records. This allows us to call `Chair.without_legs` from another class which makes this specific database access code reusable.
+Let's look at some examples. The first example will retrieve all chair records which do not have any assigned leg records. This allows us to call `Chair.without_legs` from another class which makes this specific database access code reusable. If we didn't use a scope but wanted the same database query, we would write the scope below as `Chair.left_joins(:legs).where(Leg.arel_table[:id].eq(nil))`, which is a little harder to read than `Chair.without_legs`. It also allows us to abstract the logic behind the method `without_legs` away from any other classes that need this functionality.
 
 ```ruby
 class Chair < ApplicationRecord
@@ -161,6 +161,8 @@ class Chair < ApplicationRecord
   }
 end
 ```
+
+Scopes can be simple one-liners like `where(kind: 'plush')`, or chained `ActiveRecord::Relation` objects.
 
 ## Resources
 
