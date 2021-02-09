@@ -162,7 +162,7 @@ class Chair < ApplicationRecord
 end
 ```
 
-Scopes can be simple one-liners like `where(kind: 'plush')`, or chained `ActiveRecord::Relation` objects.
+Scopes can be simple one-liners like `where(kind: 'plush')`, or chained `ActiveRecord::Relation` objects as the example above shows.
 
 ## Resources
 
