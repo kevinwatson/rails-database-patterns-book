@@ -24,6 +24,7 @@
 * [Chapter 6 - Active Record Query Interface](070-chapter-06.md)
   * Introduction
   * Examples
+  * Scopes
   * Resources
   * Wrap-up
 * [Chapter 7 - Migrations](080-chapter-07.md)

@@ -147,7 +147,7 @@ end
 
 Both `UPDATE` statements in this `transaction` block are wrapped in a single database transaction. If either of the `UPDATE` statements caused an error, the database would `ROLLBACK` the transaction and Active Record would raise an `ActiveRecord::Rollback` error. When a rollback occurs, the database changes are switched back to their previous state, as if our `UPDATE` statement never occurred.
 
-### Scopes
+## Scopes
 
 Scopes are pre-defined, reusable Active Record filters that you can define in your models. Like any `ActiveRecord::Relation` object, scopes are chainable. They can be used to hide the implementation details for complex queries.
 
@@ -169,3 +169,7 @@ Scopes can be simple one-liners like `where(kind: 'plush')`, or chained `ActiveR
 * https://guides.rubyonrails.org/active_record_querying.html
 
 ## Wrap-up
+
+The Active Record Query Interface is _the_ prefered method for interacting with the database. It provides many helper methods that make it easy to retrieve and persist data in the underlying database.
+
+The query interface sets the standard by which many other object-relational mapping (ORM) frameworks strive to replicate.
