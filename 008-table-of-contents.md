@@ -63,3 +63,9 @@
   * Queues
   * Resources
   * Wrap-up
+* [Chapter 13 - Indexes and Optimized Queries](140-chapter-13.md)
+  * Introduction
+  * Indexes
+  * Inner joins vs left joins
+  * Common Table Expressions (CTE)
+  * Wrap-up
