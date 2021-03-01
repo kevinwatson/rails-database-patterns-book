@@ -18,10 +18,21 @@ Joining tables is an expensive operation. Creating an index for a foreign key fi
 
 ### Partial Indexes
 
-As the size of a table grows, creating specific indexes that are not only for a specific column, but an index that only contains a subset of the data can help make data retrieval more efficient.
+As the size of a table grows, creating specific indexes that are not only for a specific column, but an index that only contains a subset of the data can help make data retrieval more efficient because the index is smaller than the original table. Inserts and updates are also more efficient, because the partial index does not need to be updated every time a record is inserted or updated in the related table.
+
+Partial indexes are indexes that have a WHERE clause. The WHERE clause is used to decide whether the index should be modified when a record is inserted, updated or deleted from the table. Regular indexes do not have a WHERE clause and are modifed for all changes on the table.
+
+## Table Optimization
+
+For databases that require regular maintenance, making sure that it's running lean is key to minimizing disk space usage and helping speed up queries that might need access tables directly.
 
 ## Inner joins vs left joins
 
 ## Common Table Expressions (CTE)
+
+## Resources
+
+* https://www.postgresql.org/docs/12/indexes-partial.html
+* https://thoughtbot.com/blog/postgresql-performance-considerations
 
 ## Wrap-up
