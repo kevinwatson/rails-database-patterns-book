@@ -1,6 +1,6 @@
 ### TABLE OF CONTENTS
 
-* [Chapter 1 - Ruby on Rails](020-chapter-01.md)
+* [Chapter 1 - Ruby and Ruby on Rails](020-chapter-01.md)
   * Ruby
   * Ruby on Rails
   * Resources
