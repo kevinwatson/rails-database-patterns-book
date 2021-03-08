@@ -1,6 +1,10 @@
 ### TABLE OF CONTENTS
 
-* Chapter 1 - Ruby on Rails
+* [Chapter 1 - Ruby on Rails](020-chapter-01.md)
+  * Ruby
+  * Ruby on Rails
+  * Resources
+  * Wrap-up
 * [Chapter 2 - Relational Database Terminology](030-chapter-02.md)
   * Introduction
   * Terminology
