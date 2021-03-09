@@ -1,4 +1,4 @@
-# Rails Database Patterns Book
+# Rails Database Patterns
 
 ## PostgreSQL and MySQL Database Optimizations For Rails Developers
 
