@@ -54,20 +54,19 @@
   * Execution
   * Resources
   * Wrap-up
-* Chapter 10 - SQLite Query Plans
-* [Chapter 11 - Batch Processing](120-chapter-11.md)
+* [Chapter 10 - Batch Processing](110-chapter-10.md)
   * Introduction
   * Update All
   * ActiveRecord::Batches
   * Pluck Each
   * Resources
   * Wrap-up
-* [Chapter 12 - Background Processing](130-chapter-12.md)
+* [Chapter 11 - Background Processing](120-chapter-11.md)
   * Introduction
   * Queues
   * Resources
   * Wrap-up
-* [Chapter 13 - Indexes and Optimized Queries](140-chapter-13.md)
+* [Chapter 12 - Indexes and Optimized Queries](130-chapter-12.md)
   * Introduction
   * Indexes
   * Inner joins vs left joins
