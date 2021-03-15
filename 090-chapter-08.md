@@ -339,3 +339,5 @@ Lines 15 and 16 show the planning and execution times
 * https://www.postgresql.org/docs/10/parallel-query.html
 * https://www.postgresql.org/message-id/12553.1135634231@sss.pgh.pa.us
 * https://www.postgresql.org/docs/9.2/spgist-intro.html
+
+[Next >>](100-chapter-09.md)

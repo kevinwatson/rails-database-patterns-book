@@ -51,3 +51,5 @@ ACID is a set of properties that help guarantee the validity of data committed t
 ## Resources
 
 * https://en.wikipedia.org/wiki/Relational_database
+
+[Next >>](040-chapter-03.md)

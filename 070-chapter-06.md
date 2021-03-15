@@ -173,3 +173,5 @@ Scopes can be simple one-liners like `where(kind: 'plush')`, or chained `ActiveR
 The Active Record Query Interface is _the_ prefered method for interacting with the database. It provides many helper methods that make it easy to retrieve and persist data in the underlying database.
 
 The query interface sets the standard by which many other object-relational mapping (ORM) frameworks strive to replicate.
+
+[Next >>](080-chapter-07.md)

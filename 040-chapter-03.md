@@ -38,3 +38,5 @@ Can be generated either by the Rails application or the database. The advantage 
 * https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid
 * https://www.postgresql.org/docs/9.5/datatype-uuid.html
 * https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html
+
+[Next >>](050-chapter-04.md)

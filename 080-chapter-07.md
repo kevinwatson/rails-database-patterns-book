@@ -42,3 +42,5 @@ rails generate migration AddLoginCountToUser login_count:integer
 * https://guides.rubyonrails.org/command_line.html#rails-generate
 
 ## Wrap-up
+
+[Next >>](090-chapter-08.md)

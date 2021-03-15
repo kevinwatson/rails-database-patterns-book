@@ -233,3 +233,5 @@ INNER JOIN users users_alias ON users_alias.id = users.referred_by_user_id
 ## Wrap-up
 
 As we've seen, Arel provides an API which allows us to DRY up our code. It does this by providing Ruby methods that translate directly to the particular SQL flavor that we're using in our Ruby on Rails app.
+
+[Next >>](070-chapter-06.md)

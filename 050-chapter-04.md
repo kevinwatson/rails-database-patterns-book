@@ -44,3 +44,5 @@ Not all models need to be Active Record models that map to a database. We can ad
 
 * https://guides.rubyonrails.org/active_model_basics.html
 * https://guides.rubyonrails.org/active_record_basics.html
+
+[Next >>](060-chapter-05.md)

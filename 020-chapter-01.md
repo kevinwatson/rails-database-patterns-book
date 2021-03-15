@@ -41,3 +41,5 @@ JRuby is an implementation of Ruby that compiles Ruby code to Java bytecode. Som
 Ruby is a language that was designed with developer productivity in mind. Ruby on Rails is a framework that provides the toolset a developer needs to quickly spin up an application. There are a wide variety of gems (libraries) available to extend your application's features.
 
 In the next chapter, we'll discuss two popular gems, Active Record and Active Model. These gems are used to manage and persist the data in your application.
+
+[Next >>](030-chapter-02.md)

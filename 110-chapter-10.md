@@ -89,3 +89,5 @@ end
 ## Wrap-up
 
 When large numbers of records need to be processed, Rails and associated gems provide efficient ways to process these records. Depending on whether we want to process a single record at a time, multiple records at a time or only specific fields, there are multiple efficient ways to retrieve the data.
+
+[Next >>](120-chapter-11.md)
