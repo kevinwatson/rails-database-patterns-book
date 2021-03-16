@@ -30,9 +30,13 @@ For databases that require regular maintenance, making sure that it's running le
 
 ## Common Table Expressions (CTE)
 
+Sometimes business requirements dictate that data is aggregated for reporting purposes. Occasionally, that means that we would need to run multiple queries to generate the necessary output. Because ActiveRecord does not support returning multiple result sets, common table expressions can come to the rescue by allowing us to send a series of queries to the database in one statement and get a result set back. This also places the burden of aggregating data on the database server, reducing the need to pull back more data than is needed to display to the end user.
+
 ## Resources
 
+* https://dev.mysql.com/doc/refman/8.0/en/with.html
 * https://www.postgresql.org/docs/12/indexes-partial.html
+* https://www.postgresql.org/docs/12/queries-with.html
 * https://thoughtbot.com/blog/postgresql-performance-considerations
 
 ## Wrap-up
