@@ -32,6 +32,49 @@ For databases that require regular maintenance, making sure that it's running le
 
 Sometimes business requirements dictate that data is aggregated for reporting purposes. Occasionally, that means that we would need to run multiple queries to generate the necessary output. Because ActiveRecord does not support returning multiple result sets, common table expressions can come to the rescue by allowing us to send a series of queries to the database in one statement and get a result set back. This also places the burden of aggregating data on the database server, reducing the need to pull back more data than is needed to display to the end user.
 
+Common table expressions are written using the `WITH` clause. Each recordset is processed in order, and within the `WITH` clause the output from the previous query can be used in the next statement, and also used in the final `SELECT` statement.
+
+Let's use the following table structure to write some common table expressions.
+
+```sql
+CREATE TABLE accounts (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  account_id INTEGER NOT NULL REFERENCES accounts (id),
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  comment TEXT NOT NULL
+);
+```
+
+Let's use these test values
+
+```
+INSERT INTO posts (account_id, created_at, comment)
+VALUES (1, NOW(), 'short comment'), (2, NOW(), 'longer comment1'),
+(3, NOW(), 'lonnnnnnnggggggger comment'), (3, NOW(), 'short comment'),
+(5, NOW(), 'regular comment'), (5, NOW(), 'longest commmmmmenttttttttttttttt);
+
+INSERT INTO accounts(name) VALUES ('test 1'), ('test 2'), ('test 3'), ('test 4'), ('test 5');
+```
+
+And finally, here's our CTE to retrieve the longest post (the length of the comments field) for each account_id
+
+```sql
+WITH post_lengths AS (
+	SELECT account_id, MAX(LENGTH(posts.comment)) AS longest_post
+	FROM posts
+	GROUP BY account_id
+)
+SELECT posts.id, posts.account_id, posts.comment, LENGTH(posts.comment) AS post_length
+FROM posts
+JOIN post_lengths ON post_lengths.account_id = posts.account_id
+WHERE LENGTH(posts.comment) = post_lengths.longest_post;
+```
+
 ## Resources
 
 * https://dev.mysql.com/doc/refman/8.0/en/with.html
