@@ -30,7 +30,7 @@ For databases that require regular maintenance, making sure that it's running le
 
 ## Common Table Expressions (CTE)
 
-Sometimes business requirements dictate that data is aggregated for reporting purposes. Occasionally, that means that we would need to run multiple queries to generate the necessary output. Because ActiveRecord does not support returning multiple result sets, common table expressions can come to the rescue by allowing us to send a series of queries to the database in one statement and get a result set back. This also places the burden of aggregating data on the database server, reducing the need to pull back more data than is needed to display to the end user.
+Sometimes business requirements dictate that data is aggregated for reporting purposes. Occasionally, that means that we would need to run multiple queries to generate the necessary output. Because ActiveRecord does not support multiple result sets, common table expressions can come to the rescue by allowing us to send a series of queries to the database in one statement and get a result set back. This also places the burden of aggregating data on the database server, reducing the need to pull back more data than is needed to display to the end user.
 
 Common table expressions are written using the `WITH` clause. Each recordset is processed in order, and within the `WITH` clause the output from the previous query can be used in the next statement, and also used in the final `SELECT` statement.
 
