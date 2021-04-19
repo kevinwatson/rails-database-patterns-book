@@ -76,11 +76,33 @@ JOIN post_lengths ON post_lengths.account_id = posts.account_id
 WHERE LENGTH(posts.comment) = post_lengths.longest_post;
 ```
 
+There are a number of ways to include a large, custom query like the one above in your code. Because CTEs are complex, we can construct the queries as a string and `execute` the queries in a single database call.
+
+```ruby
+def self.longest_posts
+	sql = %{
+		WITH post_lengths AS (
+			SELECT account_id, MAX(LENGTH(posts.comment)) AS longest_post
+			FROM posts
+			GROUP BY account_id
+		)
+		SELECT posts.id, posts.account_id, posts.comment, LENGTH(posts.comment) AS post_length
+		FROM posts
+		JOIN post_lengths ON post_lengths.account_id = posts.account_id
+		WHERE LENGTH(posts.comment) = post_lengths.longest_post
+	}
+
+	ActiveRecord::Base.connection.execute(sql)
+end
+```
+
 ## Resources
 
 * https://dev.mysql.com/doc/refman/8.0/en/with.html
+* https://dockyard.com/blog/2013/09/06/postgres_ext-adds-rank-and-common-table-expressions
+* https://rubygems.org/gems/postgres_ext
+* https://thoughtbot.com/blog/postgresql-performance-considerations
 * https://www.postgresql.org/docs/12/indexes-partial.html
 * https://www.postgresql.org/docs/12/queries-with.html
-* https://thoughtbot.com/blog/postgresql-performance-considerations
 
 ## Wrap-up
