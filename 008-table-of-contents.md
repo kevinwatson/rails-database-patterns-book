@@ -69,7 +69,7 @@
 * [Chapter 12 - Indexes and Optimized Queries](130-chapter-12.md)
   * Introduction
   * Indexes
-  * Inner joins vs left joins
+  * Inner Joins vs Left (Outer) Joins
   * Common Table Expressions (CTE)
   * Wrap-up
 
