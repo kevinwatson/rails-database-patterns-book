@@ -54,9 +54,10 @@ Let's use these test values
 
 ```
 INSERT INTO posts (account_id, created_at, comment)
-VALUES (1, NOW(), 'short comment'), (2, NOW(), 'longer comment1'),
-(3, NOW(), 'lonnnnnnnggggggger comment'), (3, NOW(), 'short comment'),
-(5, NOW(), 'regular comment'), (5, NOW(), 'longest commmmmmenttttttttttttttt);
+VALUES (1, NOW(), 'short comment'),
+(2, NOW(), 'longer comment'),
+(3, NOW(), 'this is a longer comment'), (3, NOW(), 'short comment'),
+(5, NOW(), 'regular comment'), (5, NOW(), 'this is definitely going to be the longest comment');
 
 INSERT INTO accounts(name) VALUES ('test 1'), ('test 2'), ('test 3'), ('test 4'), ('test 5');
 ```
