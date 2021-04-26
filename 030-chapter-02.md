@@ -18,7 +18,7 @@ Some of the terminology differs across database platforms, depending on which do
 * Data Manipulation Language (DML) - Statements that can create, modify or remove rows from a table
 * Database - A collection of objects, such as tables, where records are stored
 * Deadlock - A situation where two or more database connections are waiting for a lock on a resource (row, table, etc) to be released
-* Fields - Distinct attributes that describe an individual record
+* Fields - Distinct attributes that describe an individual record or entity
 * Function - Logic that can run against one or more columns inside of a transaction
 * Index - A data structure that provides quick access to data
 * Join - Used to combine the results of one or more relations
