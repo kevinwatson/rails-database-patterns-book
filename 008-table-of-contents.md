@@ -72,5 +72,6 @@
   * Inner Joins vs Left (Outer) Joins
   * Common Table Expressions (CTE)
   * Wrap-up
+* [Chapter 13 - Summary](140-chapter-13.md)
 
 [Next >>](020-chapter-01.md)
