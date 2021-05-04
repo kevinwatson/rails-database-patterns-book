@@ -1,4 +1,4 @@
-### Chapter 14 - Summary
+### Chapter 13 - Summary
 
 Thank you for coming on this journey discovering *Rails Database Patterns.* I hope you had as much fun reading as I did writing this book. My hope is that this book has provided patterns that you can follow to scale your application and database interactions.
 
