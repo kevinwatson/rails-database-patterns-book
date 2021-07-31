@@ -10,6 +10,7 @@
   * Terminology
   * ACID
   * Resources
+  * Wrap-up
 * [Chapter 3 - Keys](040-chapter-03.md)
   * Introduction
   * Primary Keys

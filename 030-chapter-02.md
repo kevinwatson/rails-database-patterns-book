@@ -4,6 +4,10 @@
 
 In this book, we'll discuss a few relational database platforms that are popular in the Ruby on Rails community. We'll discuss the terminology used in each platform, which can differ. We'll also cover the common data types offered by each platform.
 
+Simply put, a database is a collection of related data. It could be stored in memory or in a text file. Most Ruby on Rails apps will make use of a relational database, such as SQLite, MySQL or PostgreSQL. Relational databases differ from other types of databases (such as document databases) in that the data is organized in tables with dependencies between the tables. Ruby on Rails' Active Record library is designed to support these relational table structures.
+
+Active Record scaffolding and migrations have built-in generators to create database migrations which are stored in code and can be run by the developer to create the tables without the need to use a separate database client to maintain the database schema.
+
 ## Terminology
 
 Some of the terminology differs across database platforms, depending on which documention you read or who you ask. Most of the time, though they're using different terminology to describe the same things. Here are a few terms that we'll use throughout the book.
@@ -32,6 +36,7 @@ Some of the terminology differs across database platforms, depending on which do
 * Relational Database Management System (RDBMS) - A collection of relational objects (views, tables, etc) which store data and can be queried and manipulated
 * Replication - Read-only copies of the database. Commonly used to provide another near-time copy of the data to reduce query loads on the primary database.
 * Rollback - When a failure occurs during a transaction, the current and prior statements are switched back to their state before the transaction started
+* Schema - The structure of the database
 * Structured Query Language (SQL) - A computer language used to retrieve and manipulate data in a database
 * Table - A collection of rows and columns
 * Table Scan - When the entire table is read to find the results of a query
@@ -51,5 +56,13 @@ ACID is a set of properties that help guarantee the validity of data committed t
 ## Resources
 
 * https://en.wikipedia.org/wiki/Relational_database
+* https://guides.rubyonrails.org/active_record_migrations.html
+* https://guides.rubyonrails.org/command_line.html
+
+## Wrap-up
+
+Relational databases are the most common types of databases used by Ruby on Rails app developers. Relational databases provide a way to model an application's data structure. We've defined relational database terminology and ACID properties.
+
+In the next chapter we'll discuss the relationships between tables, which are defined by the primary and foreign keys in each table.
 
 [Next >>](040-chapter-03.md)
