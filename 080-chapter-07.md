@@ -18,9 +18,9 @@ rails db:migrate
 
 ## Patterns
 
-1. Fields in new tables can be created with default values. When adding fields to new tables with thousands or more records, the database may lock the table if the migration adds a new field with a default value.
+1. Fields in new tables can be created with default values. When adding fields to new tables with thousands or more records, the database may lock the table if the migration adds a new field with a default value. As an alternative to the default value in the database, the model class's constructor can be used to set a default value when an object is instantiated. The record will then be inserted into the table with the defaults set.
 1. Keep migrations small. For example, when adding fields to separate tables, separate each table's changes into a single migration. This makes troubleshooting and rollbacks easier.
-1. Don't seed values in a migration. Create a rake task instead, or for new projects, add data to the `db/seeds.rb` file.
+1. Don't seed values in a migration. Create a rake task instead, or for new projects, add data to the `db/seeds.rb` file. This keeps the schema separate from the data and allows developers and deployers to run each separately.
 
 ## Examples
 
