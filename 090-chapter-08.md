@@ -4,7 +4,7 @@
 
 Query plans are a way to find out what's happening under the hood. They explain how the rows are being retrieved and their relative cost. They can help us determine how to increase performance when retrieving data.
 
-In this chapter we'll review the query plans for PostgreSQL. We'll dig into the nuances of the PostgreSQL database platform and add queries to improve the performance of our queries.
+In this chapter we'll review the query plans for PostgreSQL. We'll dig into the nuances of the PostgreSQL database platform and add indexes to improve the performance of our queries.
 
 ## Definitions
 
