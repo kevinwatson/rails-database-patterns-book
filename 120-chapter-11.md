@@ -26,6 +26,4 @@ Queues allow a system to process a large number of requests, just not all at onc
 * https://guides.rubyonrails.org/active_job_basics.html
 * https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html
 
-## Wrap-up
-
 [Next >>](130-chapter-12.md)
