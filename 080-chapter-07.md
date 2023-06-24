@@ -58,4 +58,6 @@ end
 
 ## Wrap-up
 
+Rails migrations provide an easy way to maintain an application's database schema. Long gone are the days when developers had to write SQL create and alter statements manually and open a database client to run their scripts. Now, Rails developers can write their code in Ruby and let the interpreter generate their SQL the next time they deploy.
+
 [Next >>](090-chapter-08.md)
