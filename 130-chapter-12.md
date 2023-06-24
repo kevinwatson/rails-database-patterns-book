@@ -109,4 +109,6 @@ end
 
 ## Wrap-up
 
+Nothing frustrates developers and application users more than slow data retrieval. Using our knowledge of the structure and contents of our database, we can use the tools we have available to make our data more quickly accessible. Your users will thank you. I once worked on an application that would take over 20 minutes to run a specific report. The users were used to the amount of time it would take and would click the button right before they went to lunch, anticipating that it would be finished when they got back. Once it was brought to my attention, I inspected the query, ran an explain on the database, and found that it was doing a table scan on millions of rows. I added an index which brought the query run time down to less than 10 seconds. No code or query changes were made so nothing needed to be retested and verified. With the drastically reduced query time for the report, the users could spend their time on other important tasks.
+
 [Next >>](140-chapter-13.md)
